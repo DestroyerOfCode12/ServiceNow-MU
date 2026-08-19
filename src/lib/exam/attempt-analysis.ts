@@ -19,6 +19,7 @@ export async function loadAttemptDetail(attemptId: string) {
 
 export interface DomainBreakdown {
   domainId: string;
+  domainCode: string;
   domainName: string;
   correct: number;
   total: number;
@@ -56,7 +57,14 @@ export function analyzeAttempt(attempt: AttemptWithDetail): AttemptAnalysis {
     if (eq.answer?.responseTimeSeconds != null) responseTimes.push(eq.answer.responseTimeSeconds);
 
     const dKey = eq.question.domainId;
-    const d = domainMap.get(dKey) ?? { domainId: dKey, domainName: eq.question.domain.name, correct: 0, total: 0, accuracy: 0 };
+    const d = domainMap.get(dKey) ?? {
+      domainId: dKey,
+      domainCode: eq.question.domain.code,
+      domainName: eq.question.domain.name,
+      correct: 0,
+      total: 0,
+      accuracy: 0,
+    };
     d.total += 1;
     if (isCorrect) d.correct += 1;
     domainMap.set(dKey, d);
@@ -78,7 +86,7 @@ export function analyzeAttempt(attempt: AttemptWithDetail): AttemptAnalysis {
   const sortedTopicsAsc = [...topicBreakdown].sort((a, b) => a.accuracy - b.accuracy);
 
   return {
-    domainBreakdown: domainBreakdown.sort((a, b) => a.domainName.localeCompare(b.domainName)),
+    domainBreakdown: domainBreakdown.sort((a, b) => a.domainCode.localeCompare(b.domainCode)),
     topicBreakdown,
     strongestDomain: sortedDomains[0] ?? null,
     weakestDomain: sortedDomains[sortedDomains.length - 1] ?? null,

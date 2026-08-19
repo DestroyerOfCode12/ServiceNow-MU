@@ -128,7 +128,10 @@ export function AttemptRunner({ attempt }: { attempt: ClientAttempt }) {
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col">
-      <header className="border-b border-border bg-surface">
+      {/* Sticky just below the global TopNav (h-16 / 4rem, z-40) so the countdown and
+          progress stay visible while scrolling a long question or the navigator — losing
+          sight of the clock mid-exam is the one mistake this screen can't afford to make. */}
+      <header className="sticky top-16 z-30 border-b border-border bg-surface/95 backdrop-blur">
         <div className="container-page flex flex-wrap items-center justify-between gap-3 py-3">
           <div>
             <h1 className="text-base font-semibold text-foreground">{title}</h1>

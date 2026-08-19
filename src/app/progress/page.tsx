@@ -30,7 +30,8 @@ export default async function ProgressPage() {
               <CardBody>
                 <DomainPerformanceChart
                   data={domains.map((d) => ({
-                    domain: `${d.domainCode} — ${d.domainName}`,
+                    domainCode: d.domainCode,
+                    domainName: d.domainName,
                     correct: d.correctAnswers,
                     total: d.questionsAnswered,
                     accuracy: d.accuracy,
