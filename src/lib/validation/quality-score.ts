@@ -26,6 +26,7 @@ export function computeQualityScore(input: QualityScoreInput): number {
 
   if (input.hasExplanation && input.explanationLength > 40) score += 15;
   else if (input.hasExplanation) score += 5;
+  else score -= 15; // no explanation at all is a real gap for a study platform — never let it hide behind a source/status bonus
 
   if (input.importMatchConfidence >= 0.95) score += 10;
   else if (input.importMatchConfidence >= 0.85) score += 6;

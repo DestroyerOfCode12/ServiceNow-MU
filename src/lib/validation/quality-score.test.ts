@@ -34,6 +34,11 @@ describe("computeQualityScore", () => {
     expect(low).toBeLessThan(high);
   });
 
+  it("keeps a verified question with NO explanation at all below the exam-eligible threshold", () => {
+    const score = computeQualityScore({ ...base, hasExplanation: false, explanationLength: 0, validationStatus: ValidationStatus.VERIFIED });
+    expect(score).toBeLessThan(EXAM_ELIGIBLE_THRESHOLD);
+  });
+
   it("never returns a value outside 0-100", () => {
     const score = computeQualityScore({
       ...base,
