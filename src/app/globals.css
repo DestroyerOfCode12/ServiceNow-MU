@@ -109,3 +109,65 @@ body {
   font-weight: 500;
   color: var(--foreground);
 }
+
+/* ---- Motion system --------------------------------------------------
+   Three durations, one easing curve — deliberately not five different
+   speeds for five different components. Feedback moments (Phase 4) pull
+   from these tokens rather than hand-rolling their own timings. */
+:root {
+  --motion-duration-micro: 120ms;
+  --motion-duration-standard: 200ms;
+  --motion-duration-celebratory: 500ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translate(var(--confetti-x-start, 0), 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--confetti-x-end, 0), 320px) rotate(var(--confetti-spin, 360deg)); opacity: 0; }
+}
+
+.motion-shake {
+  animation: shake var(--motion-duration-celebratory) var(--motion-ease);
+}
+
+.motion-pop-in {
+  animation: pop-in var(--motion-duration-standard) var(--motion-ease) both;
+}
+
+.motion-fade-in-up {
+  animation: fade-in-up var(--motion-duration-standard) var(--motion-ease) both;
+}
+
+/* Belt-and-suspenders: even a component that forgets to check
+   useReducedMotion() gets a safe, instant fallback at the CSS layer. */
+@media (prefers-reduced-motion: reduce) {
+  .motion-shake,
+  .motion-pop-in,
+  .motion-fade-in-up {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
