@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
+import type { NextAuthRequest } from "next-auth";
 import { auth } from "@/auth";
 
 const PROTECTED_PREFIXES = ["/dashboard", "/practice", "/exams", "/progress", "/bookmarks", "/notes", "/admin", "/search"];
 const ADMIN_PREFIXES = ["/admin"];
 
-export default auth((req) => {
+// Named `proxy` per Next.js 16's renamed convention (formerly `middleware`) —
+// recommended even when exported via `auth(...)`'s default-export wrapper,
+// since the underlying request handler is what the convention is about.
+function proxy(req: NextAuthRequest) {
   const { pathname } = req.nextUrl;
   const isProtected = PROTECTED_PREFIXES.some((p) => pathname.startsWith(p));
   if (!isProtected) return NextResponse.next();
@@ -21,7 +25,9 @@ export default auth((req) => {
   }
 
   return NextResponse.next();
-});
+}
+
+export default auth(proxy);
 
 export const config = {
   matcher: [
