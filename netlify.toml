@@ -3,9 +3,3 @@
 
 [build.environment]
   NODE_VERSION = "22"
-
-# Explicitly declared because a custom [build] command can otherwise skip
-# Netlify's auto-injected Next.js Runtime, which is what turns `next build`
-# output into the Netlify Functions/Edge Functions SSR needs.
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
