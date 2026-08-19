@@ -3,3 +3,9 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Explicitly declared so the Next.js Runtime (which turns `next build` output
+# into Netlify Functions/Edge Functions for SSR) still runs even though
+# [build] command is a custom script rather than Netlify's auto-detected one.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
