@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { computeReadiness } from "@/lib/exam/readiness";
+import { getLifetimeXp, levelFromXp } from "@/lib/gamification/xp";
 import { Card, CardBody } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
@@ -11,12 +12,21 @@ export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login?callbackUrl=/dashboard");
 
-  const [profile, exposures, fullExams, readiness] = await Promise.all([
+  const [profile, exposures, fullExams, readiness, lifetimeXp, achievementCount, unlockedAchievements] = await Promise.all([
     prisma.profile.findUnique({ where: { userId: user.id } }),
     prisma.questionExposure.findMany({ where: { userId: user.id } }),
     prisma.examAttempt.findMany({ where: { userId: user.id, mode: "FULL_EXAM", status: "SUBMITTED" } }),
     computeReadiness(user.id),
+    getLifetimeXp(prisma, user.id),
+    prisma.achievement.count({ where: { isActive: true } }),
+    prisma.userAchievement.findMany({
+      where: { userId: user.id },
+      orderBy: { unlockedAt: "desc" },
+      take: 6,
+      include: { achievement: true },
+    }),
   ]);
+  const level = levelFromXp(lifetimeXp);
 
   const questionsAnswered = exposures.reduce((s, e) => s + e.timesCorrect + e.timesIncorrect, 0);
   const questionsCorrect = exposures.reduce((s, e) => s + e.timesCorrect, 0);
@@ -71,6 +81,38 @@ export default async function DashboardPage() {
           </CardBody>
         </Card>
       </div>
+
+      <Card className="mt-6">
+        <CardBody>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-medium text-foreground-muted">Level {level.level}</p>
+              <p className="text-xs text-foreground-muted">
+                {level.xpIntoLevel} / {level.xpForNextLevel} XP to level {level.level + 1} · {lifetimeXp} XP total
+              </p>
+            </div>
+            <p className="text-xs text-foreground-muted">
+              {unlockedAchievements.length > 0 ? `${unlockedAchievements.length}` : "0"} of {achievementCount} achievements unlocked
+            </p>
+          </div>
+          <ProgressBar value={level.progressPercent} className="mt-2" />
+
+          {unlockedAchievements.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {unlockedAchievements.map((u) => (
+                <span
+                  key={u.id}
+                  title={u.achievement.description}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-muted px-2.5 py-1 text-xs font-medium text-foreground"
+                >
+                  <span aria-hidden="true">{u.achievement.icon}</span>
+                  {u.achievement.name}
+                </span>
+              ))}
+            </div>
+          )}
+        </CardBody>
+      </Card>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         <LinkButton href="/practice/weak-areas" variant="secondary">

@@ -56,14 +56,24 @@ export function FlashcardDeck({ cards }: { cards: FlashcardDatum[] }) {
         </span>
       </div>
 
+      {/* Real 3D flip via CSS transform, not a content swap — both faces stay
+          in the DOM at all times so the rotation has something to show on
+          each side. Under prefers-reduced-motion the global transition-
+          duration override (globals.css) collapses this to an instant swap. */}
       <button
         type="button"
         onClick={() => setFlipped((f) => !f)}
-        className="flex min-h-64 w-full flex-col items-center justify-center rounded-xl border border-border bg-surface p-8 text-center shadow-sm transition-colors hover:bg-surface-muted"
+        className="relative min-h-64 w-full [perspective:1200px]"
         aria-label="Flip flashcard"
       >
-        {!flipped ? (
-          <>
+        <div
+          className={clsx(
+            "relative min-h-64 w-full transition-transform duration-500 [transform-style:preserve-3d]",
+            flipped && "[transform:rotateY(180deg)]",
+          )}
+        >
+          {/* Front */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-8 text-center shadow-sm [backface-visibility:hidden] hover:bg-surface-muted">
             {card.topicName && <p className="mb-3 text-xs uppercase tracking-wide text-foreground-muted">{card.topicName}</p>}
             <p className="text-2xl font-semibold text-foreground">{card.term}</p>
             {card.contrastTerm && (
@@ -72,21 +82,24 @@ export function FlashcardDeck({ cards }: { cards: FlashcardDatum[] }) {
               </p>
             )}
             <p className="mt-4 text-xs text-foreground-muted">Click to reveal</p>
-          </>
-        ) : (
-          <div className="w-full space-y-4 text-left">
-            <div>
-              <p className="text-sm font-semibold text-foreground">{card.term}</p>
-              <p className="mt-1 text-sm text-foreground-muted">{card.definition}</p>
-            </div>
-            {card.contrastTerm && (
-              <div className="border-t border-border pt-3">
-                <p className="text-sm font-semibold text-foreground">{card.contrastTerm}</p>
-                <p className="mt-1 text-sm text-foreground-muted">{card.contrastDefinition}</p>
-              </div>
-            )}
           </div>
-        )}
+
+          {/* Back — pre-rotated 180deg so it reads right-side-up once the parent flips */}
+          <div className="absolute inset-0 flex flex-col justify-center overflow-y-auto rounded-xl border border-border bg-surface p-8 shadow-sm [backface-visibility:hidden] [transform:rotateY(180deg)]">
+            <div className="w-full space-y-4 text-left">
+              <div>
+                <p className="text-sm font-semibold text-foreground">{card.term}</p>
+                <p className="mt-1 text-sm text-foreground-muted">{card.definition}</p>
+              </div>
+              {card.contrastTerm && (
+                <div className="border-t border-border pt-3">
+                  <p className="text-sm font-semibold text-foreground">{card.contrastTerm}</p>
+                  <p className="mt-1 text-sm text-foreground-muted">{card.contrastDefinition}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </button>
 
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
