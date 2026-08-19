@@ -46,6 +46,16 @@ export function TopNav() {
         <div className="flex items-center gap-2">
           {status === "authenticated" ? (
             <>
+              <Link
+                href="/search"
+                aria-label="Search"
+                className="rounded-md p-2 text-foreground-muted hover:bg-surface-muted hover:text-foreground"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
+                </svg>
+              </Link>
               <span className="hidden text-sm text-foreground-muted md:inline">{session.user?.name ?? session.user?.email}</span>
               <Button variant="secondary" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>
                 Sign out
