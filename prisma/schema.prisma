@@ -112,6 +112,8 @@ model User {
   auditLogEntries     ContentAuditLog[]    @relation("AuditActor")
   createdQuestions    Question[]           @relation("QuestionCreatedBy")
   validationsRecorded QuestionValidation[] @relation("ValidatedBy")
+  xpEvents            XPEvent[]
+  achievements        UserAchievement[]
 
   @@index([email])
 }
@@ -571,6 +573,93 @@ model QuestionExposure {
   avgConfidence  Float?
 
   @@unique([userId, questionId])
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Gamification
+//
+// Level is deliberately NOT a stored column anywhere — it's a pure function
+// of a user's lifetime XP total (sum of their XPEvent rows), computed on
+// read. Storing it would let it drift out of sync with the ledger it's
+// supposed to represent; recomputing it is cheap and can never be wrong.
+//
+// Streaks are NOT duplicated here — Profile.studyStreakDays /
+// longestStreakDays / lastStudyDate (see updateStudyStreak() in
+// lib/exam/scoring.ts) already is the real, working streak system. XP for
+// a streak day is just another XPEvent with source STREAK_DAY, sourced from
+// that same update.
+// ---------------------------------------------------------------------------
+
+/// Where a chunk of XP came from — a fixed, code-defined vocabulary (like
+/// ValidationStatus), even though individual XPEvent rows and Achievement
+/// definitions are entirely DB-driven, never hard-coded per user.
+enum XPSource {
+  CORRECT_ANSWER
+  EXAM_COMPLETED
+  STREAK_DAY
+  TOPIC_MASTERED
+  ACHIEVEMENT_UNLOCKED
+}
+
+/// Append-only ledger — never updated or decremented in place, so a user's
+/// XP total is always reconstructable and auditable from history alone.
+model XPEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount    Int
+  source    XPSource
+  attemptId String? // optional traceability back to the attempt that triggered this, for debugging/audit
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, createdAt])
+}
+
+/// Admin-defined and versioned like the rest of this platform's content —
+/// never a hard-coded badge list in application code. `criteriaType` +
+/// `criteriaThreshold` are evaluated by a small, fixed set of check
+/// functions (see lib/gamification/achievements.ts); the *instances*
+/// (name, description, icon, threshold) are fully DB-driven and
+/// admin-editable without a code change.
+model Achievement {
+  id                String                  @id @default(cuid())
+  code              String                  @unique // stable machine key, e.g. "streak-7"
+  name              String
+  description       String
+  icon              String? // an emoji or icon key — kept simple, no asset pipeline
+  criteriaType      AchievementCriteriaType
+  criteriaThreshold Int? // meaning depends on criteriaType (e.g. streak days, questions answered)
+  xpReward          Int                     @default(0)
+  isActive          Boolean                 @default(true)
+  sortOrder         Int                     @default(0)
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  unlocks UserAchievement[]
+
+  @@index([isActive])
+}
+
+enum AchievementCriteriaType {
+  STREAK_DAYS // criteriaThreshold = consecutive study days
+  QUESTIONS_ANSWERED // criteriaThreshold = lifetime questions answered
+  EXAMS_COMPLETED // criteriaThreshold = full/timed exams submitted
+  DOMAIN_PERFECT // a domain practiced with 100% accuracy (criteriaThreshold unused)
+  TOPIC_MASTERED_COUNT // criteriaThreshold = number of topics at >=80% accuracy
+  FIRST_EXAM_COMPLETED // criteriaThreshold unused
+}
+
+model UserAchievement {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  unlockedAt    DateTime    @default(now())
+
+  @@unique([userId, achievementId])
   @@index([userId])
 }
 

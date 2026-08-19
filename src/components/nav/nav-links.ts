@@ -47,6 +47,7 @@ export const ADMIN_TABS: NavLink[] = [
   { label: "Questions", href: "/admin/questions" },
   { label: "Validation Queue", href: "/admin/validation" },
   { label: "Sources", href: "/admin/sources" },
+  { label: "Achievements", href: "/admin/achievements" },
   { label: "Blueprint", href: "/admin/blueprint" },
   { label: "Analytics", href: "/admin/analytics" },
 ];
