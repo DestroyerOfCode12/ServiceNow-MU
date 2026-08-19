@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { SubTabs } from "@/components/nav/sub-tabs";
 import { STUDY_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
+
+export const metadata: Metadata = { title: "Study · CSA Prep Platform" };
 
 // Content is admin-editable and DB-backed — never statically frozen at build time.
 export const dynamic = "force-dynamic";

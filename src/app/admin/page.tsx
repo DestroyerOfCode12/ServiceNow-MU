@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/current-user";
@@ -6,6 +7,8 @@ import { SubTabs } from "@/components/nav/sub-tabs";
 import { ADMIN_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
+
+export const metadata: Metadata = { title: "Admin · CSA Prep Platform" };
 
 export default async function AdminOverviewPage() {
   const user = await getCurrentUser();

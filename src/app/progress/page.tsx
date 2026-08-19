@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { getDomainAccuracies, getTopicAccuracies } from "@/lib/exam/weakness";
@@ -6,6 +7,8 @@ import { PROGRESS_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { DomainPerformanceChart } from "@/components/charts/domain-performance-chart";
 import { ProgressBar } from "@/components/ui/progress-bar";
+
+export const metadata: Metadata = { title: "Progress · CSA Prep Platform" };
 
 export default async function ProgressPage() {
   const user = await getCurrentUser();

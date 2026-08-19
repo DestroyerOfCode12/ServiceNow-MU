@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
@@ -5,6 +6,8 @@ import { SubTabs } from "@/components/nav/sub-tabs";
 import { EXAM_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { StartAttemptButton } from "@/components/exam/start-attempt-button";
+
+export const metadata: Metadata = { title: "Exams · CSA Prep Platform" };
 
 export default async function FullExamPage() {
   const user = await getCurrentUser();
