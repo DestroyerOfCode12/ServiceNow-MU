@@ -1,8 +1,12 @@
-# No custom [build] command or [[plugins]] block on purpose: both reliably
-# broke Netlify's zero-config Next.js detection/Runtime plugin in practice.
-# Prisma migrations run via `postinstall` instead (scripts/migrate.mjs),
-# which fires during `npm install`, before Netlify's own auto-detected
-# `next build` step — so the framework runtime is never bypassed.
+# No custom [build] command on purpose: it reliably broke Netlify's
+# zero-config Next.js detection/Runtime plugin in practice (0 functions ever
+# got deployed). Prisma migrations instead run from a local build plugin's
+# onPreBuild hook — see netlify/plugins/prisma-migrate — which fires after
+# Netlify DB's connection string is injected but before the framework build
+# step, without needing to override how that build step is invoked.
 
 [build.environment]
   NODE_VERSION = "22"
+
+[[plugins]]
+  package = "./netlify/plugins/prisma-migrate"
