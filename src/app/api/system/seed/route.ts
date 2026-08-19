@@ -9,8 +9,13 @@ import { runSeed } from "@/lib/seed/run-seed";
  * shared `runSeed` function, but callable over HTTP instead of the CLI.
  *
  * Guarded by SEED_TOKEN (a secret env var, not one an admin ever types into
- * a UI) and refuses to run twice: seeding isn't idempotent for questions, so
- * a second call would duplicate the question bank.
+ * a UI) and refuses to run twice as a deliberate operational safeguard —
+ * `runSeed` itself is fully idempotent now (existence-guarded per content
+ * type), but this endpoint still only exists to bootstrap a brand-new,
+ * empty database, not to be re-triggered casually against a live one.
+ * For adding new seed-only content (e.g. a new achievement set) to an
+ * already-seeded deployment, see /api/system/seed-achievements instead —
+ * a narrower, always-safe-to-re-run sibling endpoint.
  */
 export async function POST(req: Request) {
   const token = process.env.SEED_TOKEN;
