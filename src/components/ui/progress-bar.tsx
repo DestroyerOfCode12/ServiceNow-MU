@@ -4,7 +4,7 @@ export function ProgressBar({
   value,
   max = 100,
   className,
-  barClassName,
+  barClassName = "bg-accent",
   label,
 }: {
   value: number;
@@ -23,7 +23,7 @@ export function ProgressBar({
       aria-valuemax={max}
       aria-label={label}
     >
-      <div className={clsx("h-full rounded-full bg-accent transition-all", barClassName)} style={{ width: `${pct}%` }} />
+      <div className={clsx("h-full rounded-full transition-all", barClassName)} style={{ width: `${pct}%` }} />
     </div>
   );
 }
