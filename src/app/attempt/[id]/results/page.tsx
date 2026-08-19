@@ -1,10 +1,14 @@
 import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
+import { prisma } from "@/lib/prisma";
 import { loadAttemptDetail, analyzeAttempt } from "@/lib/exam/attempt-analysis";
+import { getLifetimeXp, levelFromXp } from "@/lib/gamification/xp";
 import { DomainPerformanceChart } from "@/components/charts/domain-performance-chart";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/button";
+import { AnimatedScore } from "./animated-score";
+import { ResultsRewards } from "./results-rewards";
 
 const MODE_LABELS: Record<string, string> = {
   FULL_EXAM: "Full CSA Exam",
@@ -30,17 +34,43 @@ export default async function ResultsPage({ params }: { params: Promise<{ id: st
   const total = attempt.totalQuestions;
   const pct = attempt.scorePercent ?? 0;
 
+  // Gamification: what did THIS attempt earn, and did it cross a level boundary?
+  // xpEvents/unlockedAchievements are looked up by attemptId — a real, traceable
+  // link recorded at scoring time — rather than inferred from timestamps.
+  const [xpEvents, unlockedAchievements, lifetimeXp] = await Promise.all([
+    prisma.xPEvent.findMany({ where: { attemptId: id }, select: { amount: true } }),
+    prisma.userAchievement.findMany({ where: { attemptId: id }, include: { achievement: true } }),
+    getLifetimeXp(prisma, user.id),
+  ]);
+  const xpEarned = xpEvents.reduce((sum, e) => sum + e.amount, 0);
+  const levelAfter = levelFromXp(lifetimeXp);
+  const levelBefore = levelFromXp(lifetimeXp - xpEarned);
+  const leveledUp = levelAfter.level > levelBefore.level;
+
   return (
     <div className="container-page py-10">
       <p className="text-sm font-medium uppercase tracking-wide text-accent">{MODE_LABELS[attempt.mode] ?? attempt.mode} · Practice Result</p>
       <h1 className="mt-1 text-3xl font-bold text-foreground">Results</h1>
 
-      <Card className="mt-6">
+      <div className="mt-4">
+        <ResultsRewards
+          xpEarned={xpEarned}
+          leveledUp={leveledUp}
+          newLevel={levelAfter.level}
+          scorePercent={pct}
+          unlockedAchievements={unlockedAchievements.map((u) => ({
+            id: u.id,
+            name: u.achievement.name,
+            description: u.achievement.description,
+            icon: u.achievement.icon,
+            xpReward: u.achievement.xpReward,
+          }))}
+        />
+      </div>
+
+      <Card className="mt-4">
         <CardBody className="flex flex-col items-center gap-2 py-8 text-center">
-          <p className="text-5xl font-bold text-foreground">
-            {score} <span className="text-2xl font-medium text-foreground-muted">/ {total}</span>
-          </p>
-          <p className="text-xl font-semibold text-accent">{pct.toFixed(1)}%</p>
+          <AnimatedScore score={score} total={total} percent={pct} />
           <p className="mt-3 max-w-lg text-sm text-foreground-muted">
             This score is a practice indicator and does not represent the official ServiceNow CSA pass/fail
             determination. ServiceNow does not publish its CSA exam cut score, so no pass/fail label is shown here.

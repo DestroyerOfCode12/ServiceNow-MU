@@ -156,7 +156,7 @@ export async function scoreAttempt(attemptId: string, userId: string) {
 
   // Runs last so achievements that depend on the progress/streak/XP work
   // above (e.g. STREAK_DAYS, QUESTIONS_ANSWERED) see this submission's effects.
-  const unlockedAchievements = await checkAndUnlockAchievements(prisma, userId);
+  const unlockedAchievements = await checkAndUnlockAchievements(prisma, userId, attemptId);
 
   return { ...updated, xpAwarded, unlockedAchievements };
 }

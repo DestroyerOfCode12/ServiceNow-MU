@@ -74,7 +74,7 @@ export interface UnlockedAchievement {
  * recorded via the (userId, achievementId) unique constraint so a race
  * between two calls can't double-award it.
  */
-export async function checkAndUnlockAchievements(prisma: PrismaClient, userId: string): Promise<UnlockedAchievement[]> {
+export async function checkAndUnlockAchievements(prisma: PrismaClient, userId: string, attemptId?: string): Promise<UnlockedAchievement[]> {
   const [candidates, alreadyUnlocked] = await Promise.all([
     prisma.achievement.findMany({ where: { isActive: true } }),
     prisma.userAchievement.findMany({ where: { userId }, select: { achievementId: true } }),
@@ -90,7 +90,7 @@ export async function checkAndUnlockAchievements(prisma: PrismaClient, userId: s
 
     try {
       await prisma.$transaction([
-        prisma.userAchievement.create({ data: { userId, achievementId: achievement.id } }),
+        prisma.userAchievement.create({ data: { userId, achievementId: achievement.id, attemptId } }),
         ...(achievement.xpReward > 0
           ? [
               prisma.xPEvent.create({

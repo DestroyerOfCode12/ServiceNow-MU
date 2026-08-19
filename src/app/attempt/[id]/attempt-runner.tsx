@@ -242,8 +242,8 @@ function QuestionCard({
             <label
               key={opt.id}
               className={clsx(
-                "flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 text-sm transition-colors",
-                checked ? "border-accent bg-info-bg" : "border-border hover:bg-surface-muted",
+                "flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 text-sm transition-[color,background-color,border-color,transform] duration-200",
+                checked ? "scale-[1.015] border-accent bg-info-bg" : "border-border hover:bg-surface-muted",
               )}
             >
               <input

@@ -657,6 +657,7 @@ model UserAchievement {
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   achievementId String
   achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  attemptId     String? // which attempt's submission triggered this unlock, if any — lets the results page show it
   unlockedAt    DateTime    @default(now())
 
   @@unique([userId, achievementId])
