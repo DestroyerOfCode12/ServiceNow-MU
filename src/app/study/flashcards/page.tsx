@@ -4,6 +4,9 @@ import { SubTabs } from "@/components/nav/sub-tabs";
 import { STUDY_TABS } from "@/components/nav/nav-links";
 import { FlashcardDeck } from "./flashcard-deck";
 
+// Content is admin-editable and DB-backed — never statically frozen at build time.
+export const dynamic = "force-dynamic";
+
 export default async function FlashcardsPage() {
   const cards = await prisma.flashcard.findMany({
     include: { topic: true },
