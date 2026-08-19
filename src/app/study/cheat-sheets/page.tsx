@@ -10,6 +10,10 @@ import { MarkdownLite } from "@/components/markdown-lite";
  * validated `coreConcepts` / `terminology` / `commonTraps` fields — never a
  * separately hand-maintained copy that could drift from the source topic.
  */
+
+// Content is admin-editable and DB-backed — never statically frozen at build time.
+export const dynamic = "force-dynamic";
+
 const CHEAT_SHEETS: { title: string; topicSlugs: string[] }[] = [
   { title: "ACL Cheat Sheet", topicSlugs: ["access-control"] },
   { title: "Update Set Cheat Sheet", topicSlugs: ["system-update-sets"] },

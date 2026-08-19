@@ -5,6 +5,9 @@ import { STUDY_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
 
+// Content is admin-editable and DB-backed — never statically frozen at build time.
+export const dynamic = "force-dynamic";
+
 export default async function StudyPage() {
   const domains = await prisma.examDomain.findMany({
     where: { blueprintVersion: { status: "ACTIVE" } },
