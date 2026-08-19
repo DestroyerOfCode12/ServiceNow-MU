@@ -1,0 +1,2554 @@
+[
+  {
+    "number": 1,
+    "question_text": "What are valid states of an update set?",
+    "choose_n": 2,
+    "options": [
+      "Ignore",
+      "Published",
+      "Draft",
+      "Complete"
+    ],
+    "correct_raw": "Ignore, Complete",
+    "explanation_lines": [
+      "Complete = update set is finished and ready to move to another instance. Ignore = update/update set should not be applied (skipped on commit). Draft/Published are knowledge article states, not update set states."
+    ],
+    "correct_options": [
+      "Ignore",
+      "Complete"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Update Sets & Migration"
+    ]
+  },
+  {
+    "number": 2,
+    "question_text": "Which feature provides server-side and client-side JavaScript classes and methods for building custom functionality?",
+    "choose_n": null,
+    "options": [
+      "APIs",
+      "Business Rules",
+      "Client Scripts",
+      "UI Policies"
+    ],
+    "correct_raw": "APIs",
+    "explanation_lines": [
+      "APIs (e.g., GlideRecord, GlideSystem) provide reusable classes/methods. Business Rules/Client Scripts/UI Policies consume APIs but don't provide them."
+    ],
+    "correct_options": [
+      "APIs"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 3,
+    "question_text": "What does an Administrator do if a plugin does not appear in the Application Manager?",
+    "choose_n": null,
+    "options": [
+      "Activate from Plugins module",
+      "Create an update set to download it",
+      "Request activation through Now Support",
+      "Clone the instance"
+    ],
+    "correct_raw": "Request the plugin activation through Now Support",
+    "explanation_lines": [
+      "If a plugin isn't available on the instance, only ServiceNow personnel (via Now Support request) can make it available."
+    ],
+    "correct_options": [
+      "Request activation through Now Support"
+    ],
+    "_match_confidence": 0.87,
+    "study_guide_buckets": [
+      "Application Management/Plugins"
+    ]
+  },
+  {
+    "number": 4,
+    "question_text": "What is the goal of the Shared Responsibility Model in ServiceNow?",
+    "choose_n": null,
+    "options": [
+      "Preserve CMDB integrity",
+      "Assess configuration risk & recommend remediation",
+      "Clarify accountability and uphold security and privacy",
+      "Automate tests and validate instance after changes"
+    ],
+    "correct_raw": "To clarify accountability and uphold security and privacy",
+    "explanation_lines": [
+      "Defines who's responsible for what between ServiceNow (platform), customers (data/config), and infra providers. Not CMDB (CMDB Health), not risk assessment (Security Center/Config Compliance), not testing (ATF)."
+    ],
+    "correct_options": [
+      "Clarify accountability and uphold security and privacy"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Shared Responsibility Model"
+    ]
+  },
+  {
+    "number": 5,
+    "question_text": "In which table do users create auto-generated follow-up entries for tasks or records they need to return to later?",
+    "choose_n": null,
+    "options": [
+      "My Work",
+      "Task SLA",
+      "Reminder",
+      "Incident"
+    ],
+    "correct_raw": "Reminder",
+    "explanation_lines": [],
+    "correct_options": [
+      "Reminder"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Knowledge Management"
+    ]
+  },
+  {
+    "number": 6,
+    "question_text": "What are ServiceNow core actions in Flow Designer?",
+    "choose_n": 2,
+    "options": [
+      "Create Event",
+      "Ask for Approval",
+      "Create Record",
+      "Send Report",
+      "Send Notifications"
+    ],
+    "correct_raw": "Ask for Approval, Create Record",
+    "explanation_lines": [
+      "Send Report/Send Notification/Create Event are not core Flow Designer actions (reporting = Reports/Dashboards; notifications = Notification framework/spokes; events = system logging/scripts)."
+    ],
+    "correct_options": [
+      "Ask for Approval",
+      "Create Record"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 7,
+    "question_text": "Which field behaviors are controlled using a UI Policy?",
+    "choose_n": 2,
+    "options": [
+      "Read-only",
+      "Audit",
+      "Mandatory",
+      "Encrypt"
+    ],
+    "correct_raw": "Read-only, Mandatory",
+    "explanation_lines": [
+      "Encryption is dictionary-level; Auditing tracks field value changes \u2014 neither is a UI Policy behavior."
+    ],
+    "correct_options": [
+      "Read-only",
+      "Mandatory"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 8,
+    "question_text": "Which module in the Service Catalog application is used to create catalog items?",
+    "choose_n": null,
+    "options": [
+      "Catalog Client Scripts",
+      "User Criteria",
+      "Maintain Items",
+      "Variable Sets"
+    ],
+    "correct_raw": "Maintain Items",
+    "explanation_lines": [],
+    "correct_options": [
+      "Maintain Items"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 9,
+    "question_text": "Which features can be used to activate or implement applications or application features in the ServiceNow Platform?",
+    "choose_n": 2,
+    "options": [
+      "Access Controls",
+      "Plugins",
+      "Business Rules",
+      "ServiceNow store",
+      "UI Policies"
+    ],
+    "correct_raw": "Plugins, ServiceNow store",
+    "explanation_lines": [],
+    "correct_options": [
+      "Plugins",
+      "ServiceNow store"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 10,
+    "question_text": "Which fields are inherited by tables that extend from the Task table?",
+    "choose_n": 2,
+    "options": [
+      "State",
+      "Work notes",
+      "Knowledge Base",
+      "Workflow"
+    ],
+    "correct_raw": "State, Work notes",
+    "explanation_lines": [
+      "Knowledge Base/Workflow fields belong to Knowledge Article records, not the Task table."
+    ],
+    "correct_options": [
+      "State",
+      "Work notes"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 11,
+    "question_text": "Which statement best describes an Update Set?",
+    "choose_n": null,
+    "options": [
+      "A collection of configuration changes that can be moved between instances",
+      "A collection of field mappings that define relationships between import set fields and fields in a target table",
+      "A collection of team members based on specific requirements",
+      "Protection for applications by identifying and restricting access to application files and data"
+    ],
+    "correct_raw": "A collection of configuration changes that can be moved between instances",
+    "explanation_lines": [
+      "Don't confuse with: field mappings = Transform Maps; team members = groups; app file/data protection = Application Scoping."
+    ],
+    "correct_options": [
+      "A collection of configuration changes that can be moved between instances"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Update Sets & Migration"
+    ]
+  },
+  {
+    "number": 12,
+    "question_text": "Which feature enables a user to complete a form with predefined values?",
+    "choose_n": null,
+    "options": [
+      "Related List",
+      "Templates",
+      "Tags",
+      "Favorites"
+    ],
+    "correct_raw": "Templates",
+    "explanation_lines": [],
+    "correct_options": [
+      "Templates"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 13,
+    "question_text": "Which language is primarily used in ServiceNow?",
+    "choose_n": null,
+    "options": [
+      "HTML",
+      "Jelly Script",
+      "Python",
+      "JavaScript"
+    ],
+    "correct_raw": "JavaScript",
+    "explanation_lines": [
+      "Jelly = legacy UI Pages/Macros markup; Python = external integration only; HTML = layout only."
+    ],
+    "correct_options": [
+      "JavaScript"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 14,
+    "question_text": "When importing data, what does coalesce a field mean?",
+    "choose_n": null,
+    "options": [
+      "Auto-mapped to target table during transform",
+      "Set to read-only",
+      "Determines if the transform updates a record or inserts a new one",
+      "Encrypted before written to staging table"
+    ],
+    "correct_raw": "The field determines if the transform updates a record or inserts a new one",
+    "explanation_lines": [
+      "Coalesce = the match key used to decide update-vs-insert during a transform map run."
+    ],
+    "correct_options": [
+      "Determines if the transform updates a record or inserts a new one"
+    ],
+    "_match_confidence": 0.96,
+    "study_guide_buckets": [
+      "Import Sets & Transform/Coalesce"
+    ]
+  },
+  {
+    "number": 15,
+    "question_text": "Which ACL operation allows users to insert new records into a table?",
+    "choose_n": null,
+    "options": [
+      "Delete",
+      "Create",
+      "Read",
+      "Write"
+    ],
+    "correct_raw": "Create",
+    "explanation_lines": [],
+    "correct_options": [
+      "Create"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 16,
+    "question_text": "How is a set of predefined options for a field configured on a form?",
+    "choose_n": 2,
+    "options": [
+      "Right-click field \u2192 Configure Choices",
+      "Dictionary Entry \u2192 Choice List Specification",
+      "Right-click form header \u2192 Configure Related Lists",
+      "Navigate to variable \u2192 modify question choices"
+    ],
+    "correct_raw": "Configure Choices (right-click), or edit the Dictionary Entry's Choice List Specification",
+    "explanation_lines": [],
+    "correct_options": [
+      "Right-click field \u2192 Configure Choices",
+      "Dictionary Entry \u2192 Choice List Specification"
+    ],
+    "_match_confidence": 0.55,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 17,
+    "question_text": "Which interface displays multiple records from a table in rows and columns?",
+    "choose_n": null,
+    "options": [
+      "Global Search",
+      "Form",
+      "List",
+      "History"
+    ],
+    "correct_raw": "List",
+    "explanation_lines": [],
+    "correct_options": [
+      "List"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 18,
+    "question_text": "Which options are states in the knowledge article lifecycle?",
+    "choose_n": 2,
+    "options": [
+      "Retired",
+      "Draft",
+      "Test",
+      "Archive",
+      "Preview"
+    ],
+    "correct_raw": "Retired, Draft",
+    "explanation_lines": [
+      "(Full KB lifecycle also includes Review and Published \u2014 those weren't offered here as distractors but matter for Q19.)"
+    ],
+    "correct_options": [
+      "Retired",
+      "Draft"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Knowledge Management"
+    ]
+  },
+  {
+    "number": 19,
+    "question_text": "In what state is a Knowledge article when it becomes visible to end users?",
+    "choose_n": null,
+    "options": [
+      "Retired",
+      "Review",
+      "Draft",
+      "Published"
+    ],
+    "correct_raw": "Published",
+    "explanation_lines": [],
+    "correct_options": [
+      "Published"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Knowledge Management"
+    ]
+  },
+  {
+    "number": 20,
+    "question_text": "When is the hardening compliance score calculated in Security Center?",
+    "choose_n": 2,
+    "options": [
+      "After the installation of the instance",
+      "After the clone of the instance",
+      "After the application of a hotfix patch",
+      "After every upgrade of the platform",
+      "On the first day of each month"
+    ],
+    "correct_raw": "After installation, On the first day of each month (scheduled monthly recalculation)",
+    "explanation_lines": [],
+    "correct_options": [
+      "After the installation of the instance",
+      "On the first day of each month"
+    ],
+    "_match_confidence": 0.64,
+    "study_guide_buckets": [
+      "Security Center"
+    ]
+  },
+  {
+    "number": 21,
+    "question_text": "What are record triggers in Flow Designer?",
+    "choose_n": 2,
+    "options": [
+      "Retired",
+      "onChange",
+      "Before",
+      "Updated",
+      "Created"
+    ],
+    "correct_raw": "Updated, Created",
+    "explanation_lines": [
+      "Retired is a KB article state; onChange/Before are Client Script/Business Rule concepts, not Flow trigger types."
+    ],
+    "correct_options": [
+      "Updated",
+      "Created"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 22,
+    "question_text": "Which table does the Incident table extend from?",
+    "choose_n": null,
+    "options": [
+      "Task",
+      "Problem",
+      "cmdb_ci",
+      "Change"
+    ],
+    "correct_raw": "Task",
+    "explanation_lines": [
+      "Problem and Change also extend Task independently \u2014 they're siblings, not parent/child of Incident."
+    ],
+    "correct_options": [
+      "Task"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 23,
+    "question_text": "Which feature does a System Administrator use to test functionality as another user?",
+    "choose_n": null,
+    "options": [
+      "Global Search",
+      "User Menu",
+      "History",
+      "Application Navigator"
+    ],
+    "correct_raw": "User Menu (Impersonate User)",
+    "explanation_lines": [],
+    "correct_options": [
+      "User Menu"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "Roles & Permissions"
+    ]
+  },
+  {
+    "number": 24,
+    "question_text": "Who is responsible for the platform infrastructure under the Shared Responsibility Model?",
+    "choose_n": null,
+    "options": [
+      "The colocation facility",
+      "The cloud service provider",
+      "ServiceNow",
+      "The customer"
+    ],
+    "correct_raw": "ServiceNow",
+    "explanation_lines": [
+      "Colocation = physical hosting; cloud provider = underlying cloud infra; customer = their data/config."
+    ],
+    "correct_options": [
+      "ServiceNow"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Shared Responsibility Model"
+    ]
+  },
+  {
+    "number": 25,
+    "question_text": "Which items are mandatory when creating an email notification?",
+    "choose_n": 2,
+    "options": [
+      "What it will contain",
+      "Email template",
+      "When to send",
+      "Email Digest"
+    ],
+    "correct_raw": "What it will contain, When to send",
+    "explanation_lines": [
+      "Email template is optional formatting, not required to create a notification."
+    ],
+    "correct_options": [
+      "What it will contain",
+      "When to send"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 26,
+    "question_text": "What happens when an Administrator sets the default set field to true on an update set?",
+    "choose_n": 2,
+    "options": [
+      "All other update sets in the same scope set to default=true",
+      "Multiple default update sets created",
+      "All other update sets in the same scope are set to default=false",
+      "Update set becomes active across all app scopes",
+      "The update set becomes the default for its scope"
+    ],
+    "correct_raw": "All others in scope flip to false; this one becomes the scope's default",
+    "explanation_lines": [],
+    "correct_options": [
+      "All other update sets in the same scope set to default=true",
+      "The update set becomes the default for its scope"
+    ],
+    "_match_confidence": 0.58,
+    "study_guide_buckets": [
+      "Update Sets & Migration"
+    ]
+  },
+  {
+    "number": 27,
+    "question_text": "Which table stores connection data for CI?",
+    "choose_n": null,
+    "options": [
+      "cmdb",
+      "cmdb_rel_ci",
+      "cmdb_class_info",
+      "cmdb_ci"
+    ],
+    "correct_raw": "cmdb_rel_ci",
+    "explanation_lines": [
+      "cmdb_ci = CI attributes themselves; cmdb_class_info = class/hierarchy metadata; cmdb = core CMDB metadata."
+    ],
+    "correct_options": [
+      "cmdb_rel_ci"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "CMDB & CSDM"
+    ]
+  },
+  {
+    "number": 28,
+    "question_text": "What does an Administrator use to view, install and manage applications in the instance?",
+    "choose_n": null,
+    "options": [
+      "Application Manager",
+      "Data Policies",
+      "System Logs",
+      "Scheduled Jobs"
+    ],
+    "correct_raw": "Application Manager",
+    "explanation_lines": [],
+    "correct_options": [
+      "Application Manager"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Application Management/Plugins"
+    ]
+  },
+  {
+    "number": 29,
+    "question_text": "Which options determine when a Business Rule runs?",
+    "choose_n": 2,
+    "options": [
+      "Display",
+      "onSubmit",
+      "Table",
+      "Async"
+    ],
+    "correct_raw": "Display, Async",
+    "explanation_lines": [
+      "(onSubmit is a Client Script type; Table specifies what the rule applies to, not when.)"
+    ],
+    "correct_options": [
+      "Display",
+      "Async"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 30,
+    "question_text": "Which statement about coalesce in Import Sets is true?",
+    "choose_n": null,
+    "options": [
+      "Prevents new records from being created during a transform",
+      "Deletes the existing record when values do not match",
+      "Coalesce updates an existing record when a matching value is found in the target table",
+      "Requires the sys_id field to be used as the match criteria"
+    ],
+    "correct_raw": "Coalesce updates an existing record when a matching value is found in the target table",
+    "explanation_lines": [
+      "Coalesce can be set on any field, not just sys_id; no match \u2192 creates new record (doesn't delete or block)."
+    ],
+    "correct_options": [
+      "Coalesce updates an existing record when a matching value is found in the target table"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Import Sets & Transform/Coalesce"
+    ]
+  },
+  {
+    "number": 31,
+    "question_text": "Which components are included in the list interface?",
+    "choose_n": 2,
+    "options": [
+      "Columns",
+      "Fields",
+      "Sections",
+      "Related lists",
+      "Activity stream"
+    ],
+    "correct_raw": "Columns, Fields",
+    "explanation_lines": [
+      "Sections/Related lists/Activity stream are form-level components, not list-level."
+    ],
+    "correct_options": [
+      "Columns",
+      "Fields"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 32,
+    "question_text": "What does Virtual Agent use to define conversations that users can interact with?",
+    "choose_n": null,
+    "options": [
+      "Topics",
+      "Catalog items",
+      "Knowledge Articles",
+      "Actions"
+    ],
+    "correct_raw": "Topics",
+    "explanation_lines": [],
+    "correct_options": [
+      "Topics"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 33,
+    "question_text": "What happens if a user fails a table-level Read ACL rule?",
+    "choose_n": null,
+    "options": [
+      "Logs a warning but still allows access",
+      "Denies field access but allows rest of record",
+      "Displays a warning asking if they want to continue",
+      "Denies access to the record and prevents the user from viewing it"
+    ],
+    "correct_raw": "The system denies access to the record and prevents the user from viewing it",
+    "explanation_lines": [
+      "(Field-level ACL failure only blocks that field, not the whole record \u2014 table-level failure blocks the whole record.)"
+    ],
+    "correct_options": [
+      "Denies access to the record and prevents the user from viewing it"
+    ],
+    "_match_confidence": 0.95,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 34,
+    "question_text": "Which field causes a UI Policy to execute the opposite of its defined actions when the condition is not met?",
+    "choose_n": null,
+    "options": [
+      "Execute if false",
+      "Execute if true",
+      "Reverse if false",
+      "Run scripts"
+    ],
+    "correct_raw": "Reverse if false",
+    "explanation_lines": [],
+    "correct_options": [
+      "Reverse if false"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 35,
+    "question_text": "What are key aspects of a Service in the CSDM?",
+    "choose_n": 2,
+    "options": [
+      "Operating model",
+      "Offering",
+      "Asset",
+      "Interaction",
+      "Portfolio"
+    ],
+    "correct_raw": "Offering, Interaction",
+    "explanation_lines": [
+      "Portfolio organizes services but isn't one of the 3 core service components; Asset/Operating model are separate CSDM concepts."
+    ],
+    "correct_options": [
+      "Offering",
+      "Interaction"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "CMDB & CSDM"
+    ]
+  },
+  {
+    "number": 36,
+    "question_text": "How do Virtual Agent help users?",
+    "choose_n": 2,
+    "options": [
+      "Configuring ACL rules",
+      "Writing knowledge articles",
+      "Building dashboards",
+      "Resetting passwords",
+      "Submitting catalog requests"
+    ],
+    "correct_raw": "Resetting passwords, Submitting catalog requests",
+    "explanation_lines": [],
+    "correct_options": [
+      "Resetting passwords",
+      "Submitting catalog requests"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 37,
+    "question_text": "Which type of Visual Task Board is used to manage a filtered set of task records?",
+    "choose_n": null,
+    "options": [
+      "Freeform",
+      "Line",
+      "Flexible",
+      "Guided"
+    ],
+    "correct_raw": "Flexible",
+    "explanation_lines": [
+      "Flexible boards are built from a list/filter; Freeform is manual; Guided follows a structured workflow with fixed lanes; Line isn't a board type (it's a chart type)."
+    ],
+    "correct_options": [
+      "Flexible"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Visual Task Boards"
+    ]
+  },
+  {
+    "number": 38,
+    "question_text": "What are variable types in the Service Catalog?",
+    "choose_n": 2,
+    "options": [
+      "String",
+      "Choice",
+      "Select Box",
+      "Date"
+    ],
+    "correct_raw": "Select Box, Date",
+    "explanation_lines": [
+      "(Note: ServiceNow also supports other variable types like Single Line Text \u2014 this question is testing the specific set listed above.)"
+    ],
+    "correct_options": [
+      "Select Box",
+      "Date"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 39,
+    "question_text": "Which table relationships are represented as many-to-many relationships in the ServiceNow data schema?",
+    "choose_n": 2,
+    "options": [
+      "Catalog Item and Requested Item",
+      "User and Role",
+      "User and Group",
+      "Incident and Task",
+      "Location and Asset"
+    ],
+    "correct_raw": "User and Role, User and Group",
+    "explanation_lines": [
+      "Incident\u2013Task is inheritance (parent/child class), not many-to-many."
+    ],
+    "correct_options": [
+      "User and Role",
+      "User and Group"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 40,
+    "question_text": "In which order does ServiceNow evaluate ACL rules when determining access to a record and its fields?",
+    "choose_n": null,
+    "options": [
+      "Table first (most specific \u2192 most general), then field (most specific \u2192 most general)",
+      "Table first (general \u2192 specific), then field (general \u2192 specific)",
+      "Field first (specific \u2192 general), then table",
+      "Field first (general \u2192 specific), then table"
+    ],
+    "correct_raw": "Table first, most specific \u2192 most general, then field, most specific \u2192 most general",
+    "explanation_lines": [],
+    "correct_options": [
+      "Table first (most specific \u2192 most general), then field (most specific \u2192 most general)"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 41,
+    "question_text": "Which data visualization types are allowed in reports or dashboards?",
+    "choose_n": 2,
+    "options": [
+      "Freeform",
+      "Pie",
+      "Guided",
+      "Heatmap"
+    ],
+    "correct_raw": "Pie, Heatmap",
+    "explanation_lines": [
+      "Freeform/Guided are Visual Task Board types, not chart/visualization types."
+    ],
+    "correct_options": [
+      "Pie",
+      "Heatmap"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Reports/Dashboards/Performance Analytics"
+    ]
+  },
+  {
+    "number": 42,
+    "question_text": "Which statement describes the function of the Application Navigator?",
+    "choose_n": null,
+    "options": [
+      "Allowing a user to impersonate another user for testing",
+      "Capturing and displaying fields for individual records within a table",
+      "Providing access to all applications and modules a user is permitted to use",
+      "Displaying the main interface where records and lists appear for the selected module"
+    ],
+    "correct_raw": "Providing access to all applications and modules a user is permitted to use",
+    "explanation_lines": [
+      "(The last option describes the content frame, not the Navigator.)"
+    ],
+    "correct_options": [
+      "Providing access to all applications and modules a user is permitted to use"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 43,
+    "question_text": "Which statement describes Security Center?",
+    "choose_n": null,
+    "options": [
+      "Can automate recommended security changes",
+      "Seamlessly manages MFA for the instance",
+      "Replaces role-based access control with a user-friendly UI",
+      "Can improve security posture and strengthen compliance levels"
+    ],
+    "correct_raw": "Security Center can improve security posture and strengthen compliance levels",
+    "explanation_lines": [
+      "It recommends/guides \u2014 it does NOT auto-apply changes or replace RBAC/ACLs."
+    ],
+    "correct_options": [
+      "Can improve security posture and strengthen compliance levels"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "Security Center"
+    ]
+  },
+  {
+    "number": 44,
+    "question_text": "What does the maturity level represent for a Security Best Practice?",
+    "choose_n": null,
+    "options": [
+      "The order of impact and effort required to implement the best practice",
+      "The number of security tasks associated with it",
+      "The access control requirements needed",
+      "The level of encryption required"
+    ],
+    "correct_raw": "The order of impact and effort required to implement the best practice",
+    "explanation_lines": [],
+    "correct_options": [
+      "The order of impact and effort required to implement the best practice"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Security Center"
+    ]
+  },
+  {
+    "number": 45,
+    "question_text": "What is a user allowed to do within the User menu of the Next Experience Unified Navigation?",
+    "choose_n": 2,
+    "options": [
+      "Edit a favorite",
+      "Change the Application Scope",
+      "Edit preferences",
+      "Update their User Profile"
+    ],
+    "correct_raw": "Edit preferences, Update their User Profile",
+    "explanation_lines": [
+      "Favorites are managed from the nav bar; scope is changed via Studio/Application Picker."
+    ],
+    "correct_options": [
+      "Edit preferences",
+      "Update their User Profile"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 46,
+    "question_text": "What are types of Service Catalog items?",
+    "choose_n": 2,
+    "options": [
+      "Record producer",
+      "Order guide",
+      "Variable set",
+      "Catalog client script"
+    ],
+    "correct_raw": "Record producer, Order guide",
+    "explanation_lines": [
+      "Variable sets/Catalog client scripts support catalog items but aren't themselves catalog item types."
+    ],
+    "correct_options": [
+      "Record producer",
+      "Order guide"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 47,
+    "question_text": "What does the Virtual Agent messaging interface provide?",
+    "choose_n": null,
+    "options": [
+      "A conversational self-service experience",
+      "A tool for building integrations",
+      "A workspace for fulfillment teams",
+      "A place for users to update ACL roles"
+    ],
+    "correct_raw": "A conversational self-service experience",
+    "explanation_lines": [],
+    "correct_options": [
+      "A conversational self-service experience"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 48,
+    "question_text": "What allows a user to navigate back to a page record they were recently on?",
+    "choose_n": null,
+    "options": [
+      "User Menu",
+      "Application Picker",
+      "Favorites",
+      "History"
+    ],
+    "correct_raw": "History",
+    "explanation_lines": [],
+    "correct_options": [
+      "History"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 49,
+    "question_text": "Where are UI Policies evaluated when a user interacts with a form?",
+    "choose_n": null,
+    "options": [
+      "Client side",
+      "Global scope",
+      "System log",
+      "Server side"
+    ],
+    "correct_raw": "Client side",
+    "explanation_lines": [
+      "(Business Rules/Flows = server side.)"
+    ],
+    "correct_options": [
+      "Client side"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 50,
+    "question_text": "Which roles manage multiple Knowledge Bases?",
+    "choose_n": 2,
+    "options": [
+      "Administrator [admin]",
+      "ITIL",
+      "Catalog manager [catalog_manager]",
+      "Knowledge administrator [knowledge_admin]"
+    ],
+    "correct_raw": "admin, knowledge_admin",
+    "explanation_lines": [],
+    "correct_options": [
+      "Administrator [admin]",
+      "Knowledge administrator [knowledge_admin]"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "Knowledge Management"
+    ]
+  },
+  {
+    "number": 51,
+    "question_text": "Which information does the Security Configuration page in Security Center display?",
+    "choose_n": 2,
+    "options": [
+      "Real-time authentication and login activity",
+      "Audit history of all administrative changes",
+      "Guidance for addressing configuration risks",
+      "The instance's configuration compliance score",
+      "Incoming email filtering details"
+    ],
+    "correct_raw": "Guidance for addressing configuration risks, The instance's configuration compliance score",
+    "explanation_lines": [],
+    "correct_options": [
+      "Guidance for addressing configuration risks",
+      "The instance's configuration compliance score"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Security Center"
+    ]
+  },
+  {
+    "number": 52,
+    "question_text": "How does a user leave feedback on a knowledge article?",
+    "choose_n": 2,
+    "options": [
+      "Rating with Stars",
+      "Impersonating a User",
+      "Flagging the Article",
+      "Subscribing to the Article"
+    ],
+    "correct_raw": "Rating with Stars, Flagging the Article",
+    "explanation_lines": [
+      "Subscribing just gets update notifications; impersonation is unrelated."
+    ],
+    "correct_options": [
+      "Rating with Stars",
+      "Flagging the Article"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Knowledge Management"
+    ]
+  },
+  {
+    "number": 53,
+    "question_text": "What can a user create for items they access often and want to return to quickly?",
+    "choose_n": null,
+    "options": [
+      "Dashboard",
+      "Filter",
+      "Tag",
+      "Favorite"
+    ],
+    "correct_raw": "Favorite",
+    "explanation_lines": [],
+    "correct_options": [
+      "Favorite"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 54,
+    "question_text": "What does the Administrator use to add custom modules to the Application Navigator?",
+    "choose_n": null,
+    "options": [
+      "Dictionary",
+      "Application Menu",
+      "Data Policies",
+      "Application Registry"
+    ],
+    "correct_raw": "Application Menu",
+    "explanation_lines": [],
+    "correct_options": [
+      "Application Menu"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation",
+      "Application Management/Plugins"
+    ]
+  },
+  {
+    "number": 55,
+    "question_text": "Which feature allows users to narrow down the records displayed in a list by applying specific conditions?",
+    "choose_n": null,
+    "options": [
+      "Tag",
+      "Activity Stream",
+      "Favorite",
+      "Filter"
+    ],
+    "correct_raw": "Filter",
+    "explanation_lines": [],
+    "correct_options": [
+      "Filter"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 56,
+    "question_text": "Which interfaces does an Administrator use to configure a form?",
+    "choose_n": 2,
+    "options": [
+      "Form design",
+      "Form formatter",
+      "Form builder",
+      "Form template"
+    ],
+    "correct_raw": "Form design, Form builder",
+    "explanation_lines": [],
+    "correct_options": [
+      "Form design",
+      "Form builder"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 57,
+    "question_text": "Which role is required to add a related list to a form?",
+    "choose_n": null,
+    "options": [
+      "Form Admin [form_admin]",
+      "Personalize Form [personalize_form]",
+      "ITIL User [itil]",
+      "Template Editor [template_editor]"
+    ],
+    "correct_raw": "Personalize Form [personalize_form]",
+    "explanation_lines": [],
+    "correct_options": [
+      "Personalize Form [personalize_form]"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 58,
+    "question_text": "What happens when a user fails a field-level Read ACL?",
+    "choose_n": null,
+    "options": [
+      "Displays a warning asking to continue",
+      "The system hides the field and prevents the user from viewing its value",
+      "Denies access to the entire record",
+      "Logs a warning but still allows view/update"
+    ],
+    "correct_raw": "The system hides the field and prevents the user from viewing its value",
+    "explanation_lines": [
+      "(Contrast with Q33: table-level ACL failure blocks the whole record; field-level only blocks that field.)"
+    ],
+    "correct_options": [
+      "The system hides the field and prevents the user from viewing its value"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 59,
+    "question_text": "In an instance configured with Default Deny (glide.sm.default_mode = Deny), what happens when no explicit table or field ACL matches a requested record operation?",
+    "choose_n": null,
+    "options": [
+      "The wildcard table ACLs deny the operation unless admin access or another ACL explicitly grants it",
+      "The platform grants the operation because no specific ACL exists",
+      "The platform prompts an administrator to create a new ACL before processing",
+      "The system blocks the request until the user elevates to security_admin"
+    ],
+    "correct_raw": "The wildcard table ACLs deny the operation unless admin access or another ACL explicitly grants it",
+    "explanation_lines": [],
+    "correct_options": [
+      "The wildcard table ACLs deny the operation unless admin access or another ACL explicitly grants it"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 60,
+    "question_text": "What are the behaviors that occur once a flow has been triggered?",
+    "choose_n": null,
+    "options": [
+      "Actions",
+      "Catalog Client Scripts",
+      "Triggers",
+      "Filters"
+    ],
+    "correct_raw": "Actions",
+    "explanation_lines": [
+      "(Triggers define when a flow starts; Actions are what it does after.)"
+    ],
+    "correct_options": [
+      "Actions"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 61,
+    "question_text": "Which capability helps Virtual Agent understand user intent through natural language?",
+    "choose_n": null,
+    "options": [
+      "Localization",
+      "UI Policies",
+      "NLU models",
+      "Flows"
+    ],
+    "correct_raw": "NLU models",
+    "explanation_lines": [],
+    "correct_options": [
+      "NLU models"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 62,
+    "question_text": "Which statement is true about moving a task card from one lane to another? (Visual Task Board)",
+    "choose_n": null,
+    "options": [
+      "All fields have to be completed before moving",
+      "A user has to have an admin role to move a card",
+      "A field value on the underlying task record is updated",
+      "The move cannot be cancelled"
+    ],
+    "correct_raw": "A field value on the underlying task record is updated",
+    "explanation_lines": [
+      "(Only mandatory fields required, not all; move CAN be cancelled; no admin role required \u2014 just permission to update the record.)"
+    ],
+    "correct_options": [
+      "A field value on the underlying task record is updated"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Visual Task Boards"
+    ]
+  },
+  {
+    "number": 63,
+    "question_text": "Who is responsible for the data within a ServiceNow instance under the Shared Responsibility Model?",
+    "choose_n": null,
+    "options": [
+      "ServiceNow",
+      "The cloud service provider",
+      "A colocation facility",
+      "The customer"
+    ],
+    "correct_raw": "The customer",
+    "explanation_lines": [],
+    "correct_options": [
+      "The customer"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Shared Responsibility Model"
+    ]
+  },
+  {
+    "number": 64,
+    "question_text": "What are types of Visual Task Boards?",
+    "choose_n": 2,
+    "options": [
+      "Column",
+      "Pivot table",
+      "Freeform",
+      "Guided"
+    ],
+    "correct_raw": "Freeform, Guided",
+    "explanation_lines": [
+      "(Flexible is also a real VTB type but wasn't offered here \u2014 see Q37. Column/Pivot table are report visualization types.)"
+    ],
+    "correct_options": [
+      "Freeform",
+      "Guided"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Visual Task Boards"
+    ]
+  },
+  {
+    "number": 65,
+    "question_text": "An Administrator wants to verify records as part of the save operation, prior to the database commit. Which 'When to run' option does the Administrator use for the business rule?",
+    "choose_n": null,
+    "options": [
+      "Before",
+      "After",
+      "Async",
+      "Display"
+    ],
+    "correct_raw": "Before",
+    "explanation_lines": [
+      "(Display runs before the form is shown to the user, even earlier than Before \u2014 see Q70.)"
+    ],
+    "correct_options": [
+      "Before"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 66,
+    "question_text": "What is automatically inherited from the Task table?",
+    "choose_n": 2,
+    "options": [
+      "Fields",
+      "Business rules",
+      "UI policies",
+      "Related links",
+      "Views"
+    ],
+    "correct_raw": "Fields, Business rules",
+    "explanation_lines": [
+      "UI Policies/Views/Related Links are form- or table-specific and not automatically inherited by child tables."
+    ],
+    "correct_options": [
+      "Fields",
+      "Business rules"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 67,
+    "question_text": "Which table stores the configuration change records that are used to move changes between instances?",
+    "choose_n": null,
+    "options": [
+      "Schedule Job [sysauto]",
+      "Customer Update [sys_update_xml]",
+      "Dictionary Entries [sys_dictionary]",
+      "Update Set [sys_update_set]"
+    ],
+    "correct_raw": "Customer Update [sys_update_xml]",
+    "explanation_lines": [
+      "sys_update_set only stores the update set header (name/state/scope); sys_update_xml stores the individual change records inside it."
+    ],
+    "correct_options": [
+      "Customer Update [sys_update_xml]"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Update Sets & Migration"
+    ]
+  },
+  {
+    "number": 68,
+    "question_text": "Which feature organizes fields on a form into collapsible groups?",
+    "choose_n": null,
+    "options": [
+      "Form Sections",
+      "List Layout",
+      "Activity Stream",
+      "Related List"
+    ],
+    "correct_raw": "Form Sections",
+    "explanation_lines": [],
+    "correct_options": [
+      "Form Sections"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 69,
+    "question_text": "Which interface displays one record from a table?",
+    "choose_n": null,
+    "options": [
+      "Dashboard",
+      "Workspace",
+      "Report",
+      "Form"
+    ],
+    "correct_raw": "Form",
+    "explanation_lines": [],
+    "correct_options": [
+      "Form"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 70,
+    "question_text": "Which type of Business Rule runs after data is read from the database, but before the form is shown?",
+    "choose_n": null,
+    "options": [
+      "Display",
+      "onChange",
+      "After",
+      "onLoad"
+    ],
+    "correct_raw": "Display",
+    "explanation_lines": [],
+    "correct_options": [
+      "Display"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 71,
+    "question_text": "Which application in ServiceNow is used to load data into the platform?",
+    "choose_n": null,
+    "options": [
+      "Configuration Management Database (CMDB)",
+      "System update sets",
+      "Import Sets",
+      "Data Lookup Rules"
+    ],
+    "correct_raw": "Import Sets",
+    "explanation_lines": [],
+    "correct_options": [
+      "Import Sets"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Import Sets & Transform/Coalesce"
+    ]
+  },
+  {
+    "number": 72,
+    "question_text": "Which modules are used to change the banner image?",
+    "choose_n": 2,
+    "options": [
+      "My Company",
+      "CSS",
+      "Basic Configuration UI16",
+      "UI Policies",
+      "Maintain Items"
+    ],
+    "correct_raw": "My Company, Basic Configuration UI16",
+    "explanation_lines": [],
+    "correct_options": [
+      "My Company",
+      "Basic Configuration UI16"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 73,
+    "question_text": "What does the REQ number represent in the Service Catalog Fulfillment Process?",
+    "choose_n": null,
+    "options": [
+      "The individual items that were ordered",
+      "The set of questions the requester answers to provide item details",
+      "The entire request submitted by the user",
+      "The tasks assigned to fulfillment teams"
+    ],
+    "correct_raw": "The entire request submitted by the user",
+    "explanation_lines": [
+      "Individual items = RITM; tasks = SCTASK; questions = variables."
+    ],
+    "correct_options": [
+      "The entire request submitted by the user"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 74,
+    "question_text": "What do users use to interact with Virtual Agent?",
+    "choose_n": 2,
+    "options": [
+      "Connect Chat",
+      "Slack",
+      "Microsoft Teams",
+      "Google Chat"
+    ],
+    "correct_raw": "Slack, Microsoft Teams",
+    "explanation_lines": [],
+    "correct_options": [
+      "Slack",
+      "Microsoft Teams"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 75,
+    "question_text": "What allows different versions of a form layout to be displayed to users based on conditions such as role or table values?",
+    "choose_n": null,
+    "options": [
+      "Dictionary Overrides",
+      "Related list",
+      "View",
+      "UI Policy"
+    ],
+    "correct_raw": "View",
+    "explanation_lines": [],
+    "correct_options": [
+      "View"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 76,
+    "question_text": "Which features does an Administrator use to visualize CI connections?",
+    "choose_n": 2,
+    "options": [
+      "CMDB Query Builder",
+      "Mapping Assist Utility",
+      "CI Class Manager",
+      "Dependency Views map",
+      "Relationship Editor"
+    ],
+    "correct_raw": "Dependency Views map, Relationship Editor",
+    "explanation_lines": [],
+    "correct_options": [
+      "Dependency Views map",
+      "Relationship Editor"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "CMDB & CSDM"
+    ]
+  },
+  {
+    "number": 77,
+    "question_text": "Which resource does an Administrator use as a blueprint to map IT Services?",
+    "choose_n": null,
+    "options": [
+      "CSDM",
+      "Data policy",
+      "CMDB",
+      "Mapping Assist Utility"
+    ],
+    "correct_raw": "CSDM (Common Service Data Model)",
+    "explanation_lines": [
+      "CMDB stores the data; CSDM is the framework/blueprint for how it's organized."
+    ],
+    "correct_options": [
+      "CSDM"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "CMDB & CSDM"
+    ]
+  },
+  {
+    "number": 78,
+    "question_text": "Where do users switch their instance to display a different colored theme?",
+    "choose_n": null,
+    "options": [
+      "All > Process Automation > Workflow Studio",
+      "User Menu > Preferences > Theme",
+      "All > My Company Applications > Create New",
+      "User Menu > Profile"
+    ],
+    "correct_raw": "User Menu > Preferences > Theme",
+    "explanation_lines": [],
+    "correct_options": [
+      "User Menu > Preferences > Theme"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 79,
+    "question_text": "Which events occur on the client side?",
+    "choose_n": 2,
+    "options": [
+      "When a form is submitted",
+      "When a form loads",
+      "When table data is modified",
+      "When a database record is accessed"
+    ],
+    "correct_raw": "When a form is submitted, When a form loads",
+    "explanation_lines": [
+      "(Table/database modifications and record access happen server-side.)"
+    ],
+    "correct_options": [
+      "When a form is submitted",
+      "When a form loads"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 80,
+    "question_text": "What is used to store JavaScript that runs on the server?",
+    "choose_n": null,
+    "options": [
+      "UI Actions",
+      "Client Scripts",
+      "UI Scripts",
+      "Script Includes"
+    ],
+    "correct_raw": "Script Includes",
+    "explanation_lines": [],
+    "correct_options": [
+      "Script Includes"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 81,
+    "question_text": "What allows an inherited field to behave differently on a child table?",
+    "choose_n": null,
+    "options": [
+      "Form layout",
+      "Dictionary override",
+      "Client script",
+      "UI policy"
+    ],
+    "correct_raw": "Dictionary override",
+    "explanation_lines": [],
+    "correct_options": [
+      "Dictionary override"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 82,
+    "question_text": "What is the purpose of a Workspace?",
+    "choose_n": null,
+    "options": [
+      "To create a conversational experience to increase user's ability to troubleshoot problems",
+      "To build application files",
+      "To give agents a streamlined interface for managing and completing their work",
+      "To order items and services"
+    ],
+    "correct_raw": "To give agents a streamlined interface for managing and completing their work",
+    "explanation_lines": [
+      "(Conversational = Virtual Agent; app files = Studio; ordering = Service Catalog.)"
+    ],
+    "correct_options": [
+      "To give agents a streamlined interface for managing and completing their work"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 83,
+    "question_text": "What determines the sequence in which notifications are evaluated and sent when multiple notifications meet the same conditions?",
+    "choose_n": null,
+    "options": [
+      "Weight",
+      "Subscription",
+      "Email Template",
+      "Notification Conditions"
+    ],
+    "correct_raw": "Weight \u2014 higher weight is processed first.",
+    "explanation_lines": [],
+    "correct_options": [
+      "Weight"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": []
+  },
+  {
+    "number": 84,
+    "question_text": "Which components are built using Workflow Studio?",
+    "choose_n": 2,
+    "options": [
+      "Dashboard",
+      "UI Policy",
+      "Playbook",
+      "Flow",
+      "Workspace"
+    ],
+    "correct_raw": "Playbook, Flow",
+    "explanation_lines": [],
+    "correct_options": [
+      "Playbook",
+      "Flow"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 85,
+    "question_text": "Which configuration checkbox enables scripting within a Business Rule?",
+    "choose_n": null,
+    "options": [
+      "Advanced",
+      "Filter Conditions",
+      "Accessible from",
+      "Order"
+    ],
+    "correct_raw": "Advanced",
+    "explanation_lines": [],
+    "correct_options": [
+      "Advanced"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 86,
+    "question_text": "What is assigned to a user to grant permission to access features within the platform?",
+    "choose_n": null,
+    "options": [
+      "Role",
+      "Group",
+      "Access Control List Rule",
+      "UI Policy"
+    ],
+    "correct_raw": "Role",
+    "explanation_lines": [],
+    "correct_options": [
+      "Role"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "ACLs & Security Model",
+      "Roles & Permissions"
+    ]
+  },
+  {
+    "number": 87,
+    "question_text": "Which role is required to create or modify Access Control rules?",
+    "choose_n": null,
+    "options": [
+      "Security Administrator [security_admin]",
+      "ITIL [itil]",
+      "Administrator [admin]",
+      "snc_internal"
+    ],
+    "correct_raw": "security_admin",
+    "explanation_lines": [
+      "(Even admin must elevate to security_admin to touch ACLs.)"
+    ],
+    "correct_options": [
+      "Security Administrator [security_admin]"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "ACLs & Security Model",
+      "Roles & Permissions"
+    ]
+  },
+  {
+    "number": 88,
+    "question_text": "Which capability does a Manager use to automate the approval process?",
+    "choose_n": null,
+    "options": [
+      "UI Builder",
+      "Virtual Agent",
+      "Flow Designer",
+      "Catalog Builder"
+    ],
+    "correct_raw": "Flow Designer",
+    "explanation_lines": [],
+    "correct_options": [
+      "Flow Designer"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 89,
+    "question_text": "Which tab allows a board owner to edit the settings for a Visual Task Board?",
+    "choose_n": null,
+    "options": [
+      "Configuration",
+      "Labels",
+      "Activity",
+      "Info"
+    ],
+    "correct_raw": "Configuration",
+    "explanation_lines": [],
+    "correct_options": [
+      "Configuration"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Visual Task Boards"
+    ]
+  },
+  {
+    "number": 90,
+    "question_text": "What is the best practice for an Administrator who has marked an Update Set as Complete but needs to make additional changes?",
+    "choose_n": null,
+    "options": [
+      "Create an entirely new update set",
+      "Change the state back to In Progress",
+      "Merge updates by modifying [sys_update_xml] records",
+      "Add changes to the default update set"
+    ],
+    "correct_raw": "Create an entirely new update set",
+    "explanation_lines": [
+      "Completed update sets should stay read-only to preserve history/integrity."
+    ],
+    "correct_options": [
+      "Create an entirely new update set"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Update Sets & Migration"
+    ]
+  },
+  {
+    "number": 91,
+    "question_text": "What does a System Administrator create to make the Assigned to field on a form mandatory when the State field is set to Resolved?",
+    "choose_n": null,
+    "options": [
+      "A security rule",
+      "A data policy",
+      "A business rule",
+      "A UI policy"
+    ],
+    "correct_raw": "A UI policy",
+    "explanation_lines": [
+      "(Data policy enforces server-side/API-level; UI policy is for real-time form behavior \u2014 this question specifically wants the client-side dynamic-form answer.)"
+    ],
+    "correct_options": [
+      "A UI policy"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 92,
+    "question_text": "Which feature dynamically makes a field mandatory on a form when a specific condition is met?",
+    "choose_n": null,
+    "options": [
+      "Run scripts",
+      "UI Policy Actions",
+      "On Load",
+      "UI policy conditions"
+    ],
+    "correct_raw": "UI Policy Actions",
+    "explanation_lines": [
+      "(Conditions decide when the policy applies; Actions enforce the actual mandatory/read-only/visible behavior.)"
+    ],
+    "correct_options": [
+      "UI Policy Actions"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 93,
+    "question_text": "Which area of responsibility is shared by all partners under the Shared Responsibility Model?",
+    "choose_n": null,
+    "options": [
+      "Configuration and change management",
+      "Compliance: regulatory and legal",
+      "Identity and access management",
+      "Monitoring and incident response"
+    ],
+    "correct_raw": "Compliance: regulatory and legal",
+    "explanation_lines": [
+      "IAM = customer only; Config/change = customer; Monitoring/incident response = customer + ServiceNow (not all 3-4 parties)."
+    ],
+    "correct_options": [
+      "Compliance: regulatory and legal"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Shared Responsibility Model"
+    ]
+  },
+  {
+    "number": 94,
+    "question_text": "Which Security Center role grants create permission, read access to all records, and write access limited to the user's own entries?",
+    "choose_n": null,
+    "options": [
+      "Security Center Viewer [sn_vsc_security_center_viewer]",
+      "System Administrator [admin]",
+      "ITIL [itil]",
+      "Security Task Manager [sn_vsc_task_manager]"
+    ],
+    "correct_raw": "Security Task Manager",
+    "explanation_lines": [],
+    "correct_options": [
+      "Security Task Manager [sn_vsc_task_manager]"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "Security Center"
+    ]
+  },
+  {
+    "number": 95,
+    "question_text": "What allows an administrator to view the list of plugins that are currently installed on the instance?",
+    "choose_n": null,
+    "options": [
+      "System Diagnostics",
+      "System Definition",
+      "Script includes",
+      "Data sources"
+    ],
+    "correct_raw": "System Definition (Plugins module lives here)",
+    "explanation_lines": [],
+    "correct_options": [
+      "System Definition"
+    ],
+    "_match_confidence": 0.9,
+    "study_guide_buckets": [
+      "Application Management/Plugins"
+    ]
+  },
+  {
+    "number": 96,
+    "question_text": "Which use case is best suited for a business rule?",
+    "choose_n": null,
+    "options": [
+      "Enforcing data validation at the database level",
+      "Dynamically making a field read-only based on another field",
+      "Modifying the options in a choice list based on a user's role",
+      "Making a field mandatory based on another field value"
+    ],
+    "correct_raw": "Enforcing data validation at the database level",
+    "explanation_lines": [
+      "(The other three are all classic UI Policy / Client Script use cases.)"
+    ],
+    "correct_options": [
+      "Enforcing data validation at the database level"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 97,
+    "question_text": "Which scripting type is used to control how a form behaves when a user interacts with it?",
+    "choose_n": null,
+    "options": [
+      "Scheduled job",
+      "Server-side script",
+      "Client-side script",
+      "Transform map"
+    ],
+    "correct_raw": "Client-side script",
+    "explanation_lines": [],
+    "correct_options": [
+      "Client-side script"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 98,
+    "question_text": "When running a transform, how does an Administrator force the system to create a new record for every import set row?",
+    "choose_n": null,
+    "options": [
+      "Ensure no coalesce field is selected",
+      "Use a conditional coalesce script",
+      "Use single-field coalesce",
+      "Use multiple-field coalesce"
+    ],
+    "correct_raw": "Ensure no coalesce field is selected",
+    "explanation_lines": [
+      "No coalesce = no matching criteria = every row becomes a new record (ties back to Q14/Q30/Q98 coalesce theme)."
+    ],
+    "correct_options": [
+      "Ensure no coalesce field is selected"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Import Sets & Transform/Coalesce"
+    ]
+  },
+  {
+    "number": 99,
+    "question_text": "Where do users navigate when they need to order a new laptop?",
+    "choose_n": null,
+    "options": [
+      "CMDB Workspace",
+      "Flow Designer",
+      "Knowledge Base",
+      "Service Catalog"
+    ],
+    "correct_raw": "Service Catalog",
+    "explanation_lines": [],
+    "correct_options": [
+      "Service Catalog"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 100,
+    "question_text": "Which module displays a visual representation of table inheritance?",
+    "choose_n": null,
+    "options": [
+      "Schema Map",
+      "Localization Framework",
+      "CI Class Manager",
+      "Transform Map"
+    ],
+    "correct_raw": "Schema Map",
+    "explanation_lines": [],
+    "correct_options": [
+      "Schema Map"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "CMDB & CSDM"
+    ]
+  },
+  {
+    "number": 101,
+    "question_text": "Which feature enforces field rules regardless of whether data is entered through a form?",
+    "choose_n": null,
+    "options": [
+      "UI policy",
+      "Dictionary Attribute",
+      "Data policy",
+      "Client script"
+    ],
+    "correct_raw": "Data policy",
+    "explanation_lines": [
+      "Data policies enforce server-side, so they also apply to imports/API \u2014 UI policy/client script only fire on forms."
+    ],
+    "correct_options": [
+      "Data policy"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "UI Policy / Business Rules / Client Scripts"
+    ]
+  },
+  {
+    "number": 102,
+    "question_text": "Which interface displays visualizations to allow users to make data-driven decisions?",
+    "choose_n": null,
+    "options": [
+      "Service Catalog",
+      "Activity Stream",
+      "Knowledge Article",
+      "Dashboard"
+    ],
+    "correct_raw": "Dashboard",
+    "explanation_lines": [],
+    "correct_options": [
+      "Dashboard"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 103,
+    "question_text": "Who is responsible for backup and restoration under the Shared Responsibility Model in ServiceNow?",
+    "choose_n": null,
+    "options": [
+      "The customer",
+      "The colocation facility",
+      "ServiceNow",
+      "The cloud service provider"
+    ],
+    "correct_raw": "ServiceNow",
+    "explanation_lines": [],
+    "correct_options": [
+      "ServiceNow"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Shared Responsibility Model"
+    ]
+  },
+  {
+    "number": 104,
+    "question_text": "What is the purpose of Customer Actions in Security Center?",
+    "choose_n": null,
+    "options": [
+      "Review customizations that may require backout after an upgrade",
+      "Log fixes that the system applies automatically",
+      "Create Security Tasks that remain unresolved after an upgrade",
+      "Address security risks that remain unresolved after an upgrade"
+    ],
+    "correct_raw": "Address security risks that remain unresolved after an upgrade",
+    "explanation_lines": [],
+    "correct_options": [
+      "Address security risks that remain unresolved after an upgrade"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Security Center"
+    ]
+  },
+  {
+    "number": 105,
+    "question_text": "Who shares responsibility for platform email security under the Shared Responsibility Model?",
+    "choose_n": 2,
+    "options": [
+      "The customer",
+      "Email system administrators",
+      "Colocation facility",
+      "Cloud service provider",
+      "ServiceNow"
+    ],
+    "correct_raw": "The customer, ServiceNow",
+    "explanation_lines": [],
+    "correct_options": [
+      "The customer",
+      "ServiceNow"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Shared Responsibility Model"
+    ]
+  },
+  {
+    "number": 106,
+    "question_text": "How is access to a knowledge base managed?",
+    "choose_n": null,
+    "options": [
+      "Client Scripts",
+      "User Criteria",
+      "UI Policies",
+      "Business Rules"
+    ],
+    "correct_raw": "User Criteria",
+    "explanation_lines": [],
+    "correct_options": [
+      "User Criteria"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Knowledge Management"
+    ]
+  },
+  {
+    "number": 107,
+    "question_text": "What tracks and measures a specific metric over time using historical snapshots and trend data?",
+    "choose_n": null,
+    "options": [
+      "Data Visualization",
+      "Dashboard",
+      "Table",
+      "Performance Analytics Indicator"
+    ],
+    "correct_raw": "Performance Analytics Indicator",
+    "explanation_lines": [],
+    "correct_options": [
+      "Performance Analytics Indicator"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Reports/Dashboards/Performance Analytics"
+    ]
+  },
+  {
+    "number": 108,
+    "question_text": "Which component is part of the core architecture of a ServiceNow instance?",
+    "choose_n": null,
+    "options": [
+      "MID Server",
+      "Load Balancer",
+      "Service Portal",
+      "Update Set"
+    ],
+    "correct_raw": "Load Balancer",
+    "explanation_lines": [
+      "(MID Server is an optional customer-installed agent, not core instance architecture.)"
+    ],
+    "correct_options": [
+      "Load Balancer"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 109,
+    "question_text": "Which icon provides access to configuration options such as Form Layout and Related Lists?",
+    "choose_n": null,
+    "options": [
+      "Activity stream",
+      "Application Navigator",
+      "Form context menu",
+      "More actions"
+    ],
+    "correct_raw": "Form context menu",
+    "explanation_lines": [],
+    "correct_options": [
+      "Form context menu"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 110,
+    "question_text": "Which file formats are imported using Import Sets?",
+    "choose_n": 2,
+    "options": [
+      "XML",
+      "CSV",
+      "JPG/PNG",
+      "PDF",
+      "ZIP"
+    ],
+    "correct_raw": "XML, CSV",
+    "explanation_lines": [],
+    "correct_options": [
+      "XML",
+      "CSV"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Import Sets & Transform/Coalesce"
+    ]
+  },
+  {
+    "number": 111,
+    "question_text": "What displays comments, work notes, and record history on a form?",
+    "choose_n": null,
+    "options": [
+      "Fields",
+      "Related lists",
+      "Related links",
+      "Activity stream"
+    ],
+    "correct_raw": "Activity stream",
+    "explanation_lines": [],
+    "correct_options": [
+      "Activity stream"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 112,
+    "question_text": "What provides a single place to view multiple reports and visualizations together?",
+    "choose_n": null,
+    "options": [
+      "Table",
+      "Workspace",
+      "Dashboard",
+      "Form"
+    ],
+    "correct_raw": "Dashboard",
+    "explanation_lines": [],
+    "correct_options": [
+      "Dashboard"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 113,
+    "question_text": "Which components of an Access Control rule are mandatory when defining an ACL?",
+    "choose_n": 2,
+    "options": [
+      "Type",
+      "Advance",
+      "Admin overrides",
+      "Name",
+      "Applies To"
+    ],
+    "correct_raw": "Type, Name",
+    "explanation_lines": [
+      "Type = table or field level; Name = which table/field it governs. Advanced/Applies To are optional refinements."
+    ],
+    "correct_options": [
+      "Type",
+      "Name"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "ACLs & Security Model"
+    ]
+  },
+  {
+    "number": 114,
+    "question_text": "What lists the items and modules available in the instance?",
+    "choose_n": null,
+    "options": [
+      "All menu",
+      "Globe",
+      "Workspaces menu",
+      "Favorites menu"
+    ],
+    "correct_raw": "All menu",
+    "explanation_lines": [
+      "(Globe = application scope indicator; Favorites = saved shortcuts only.)"
+    ],
+    "correct_options": [
+      "All menu"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 115,
+    "question_text": "Which interface offers a guided experience to users as they create a Record Producer and another catalog item?",
+    "choose_n": null,
+    "options": [
+      "Employee Center",
+      "Catalog Builder",
+      "Flow Designer",
+      "Knowledge Homepage"
+    ],
+    "correct_raw": "Catalog Builder",
+    "explanation_lines": [],
+    "correct_options": [
+      "Catalog Builder"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Service Catalog & Fulfillment"
+    ]
+  },
+  {
+    "number": 116,
+    "question_text": "Which feature allows Administrators to pass information from one action to another when building automated logic?",
+    "choose_n": null,
+    "options": [
+      "Trigger",
+      "Filter",
+      "Activity Stream",
+      "Data Pill"
+    ],
+    "correct_raw": "Data Pill",
+    "explanation_lines": [],
+    "correct_options": [
+      "Data Pill"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  },
+  {
+    "number": 117,
+    "question_text": "Which domain layer of the CSDM contains customer-facing service offerings that users can request or subscribe to?",
+    "choose_n": null,
+    "options": [
+      "Consume",
+      "Foundation",
+      "Design",
+      "Build"
+    ],
+    "correct_raw": "Consume",
+    "explanation_lines": [
+      "Foundation = core CMDB elements (locations, groups, users); Design = architecture/logical models; Build = technical/deployment components."
+    ],
+    "correct_options": [
+      "Consume"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "CMDB & CSDM"
+    ]
+  },
+  {
+    "number": 118,
+    "question_text": "Which value is stored in the child task record when a parent-child relationship is created between tasks?",
+    "choose_n": null,
+    "options": [
+      "A task record reference stored in the Parent reference field",
+      "Multiple records stored in a Glide list field",
+      "A user reference stored in a Reference field",
+      "A record reference stored in a Document ID field"
+    ],
+    "correct_raw": "A task record reference stored in the Parent reference field",
+    "explanation_lines": [],
+    "correct_options": [
+      "A task record reference stored in the Parent reference field"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 119,
+    "question_text": "Which field on a template record determines whether the template is ready for use?",
+    "choose_n": null,
+    "options": [
+      "Short Description",
+      "User",
+      "Table",
+      "Active"
+    ],
+    "correct_raw": "Active",
+    "explanation_lines": [],
+    "correct_options": [
+      "Active"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Forms, Lists, Views & Navigation"
+    ]
+  },
+  {
+    "number": 120,
+    "question_text": "Which capability offers employees an automated conversational experience to help them find answers and complete basic tasks?",
+    "choose_n": null,
+    "options": [
+      "Virtual Agent",
+      "Notifications",
+      "Record Producer",
+      "Connect Chat"
+    ],
+    "correct_raw": "Virtual Agent",
+    "explanation_lines": [
+      "Virtual Agent provides automated, conversational assistance that helps users find answers and complete basic tasks, directly reducing simple support tickets.",
+      "End of study guide \u2014 120 questions."
+    ],
+    "correct_options": [
+      "Virtual Agent"
+    ],
+    "_match_confidence": 1.0,
+    "study_guide_buckets": [
+      "Flow Designer / Workflow Studio / Virtual Agent"
+    ]
+  }
+]
