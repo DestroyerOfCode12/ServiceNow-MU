@@ -1,0 +1,5 @@
+[build]
+  command = "node scripts/netlify-build.mjs"
+
+[build.environment]
+  NODE_VERSION = "22"
