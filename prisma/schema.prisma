@@ -1,0 +1,595 @@
+// ServiceNow CSA Exam Preparation Platform — Prisma schema
+// Independent, unofficial study platform. Not affiliated with or endorsed by ServiceNow, Inc.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTIPLE_SELECT
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+/// Lifecycle status for a piece of content once checked against official ServiceNow sources.
+enum ValidationStatus {
+  VERIFIED
+  NEEDS_REVIEW
+  OUTDATED
+  REJECTED
+  DRAFT
+}
+
+enum BlueprintStatus {
+  DRAFT
+  ACTIVE
+  RETIRED
+}
+
+/// How authoritative a documentation source is, per the platform's source hierarchy.
+enum SourceTier {
+  TIER1 // servicenow.com product docs, official CSA blueprint, Now Learning
+  TIER2 // developer.servicenow.com, official ServiceNow Community
+  TIER3 // supplementary context only — may never override Tier 1/2
+}
+
+enum AttemptMode {
+  FULL_EXAM
+  TIMED_PRACTICE
+  QUICK_PRACTICE
+  TOPIC_PRACTICE
+  DOMAIN_PRACTICE
+  WEAK_AREA_PRACTICE
+  RANDOM_PRACTICE
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+  EXPIRED
+  ABANDONED
+}
+
+enum BookmarkEntityType {
+  QUESTION
+  TOPIC
+  FLASHCARD
+}
+
+enum ContentAuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  VALIDATE
+  APPROVE
+  REJECT
+  RETIRE
+  REVALIDATE
+  IMPORT
+}
+
+// ---------------------------------------------------------------------------
+// Identity
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  profile             Profile?
+  examAttempts        ExamAttempt[]
+  studySessions       StudySession[]
+  flashcardReviews    FlashcardReview[]
+  bookmarks           Bookmark[]
+  notes               Note[]
+  topicProgress       UserTopicProgress[]
+  domainProgress      UserDomainProgress[]
+  questionExposure    QuestionExposure[]
+  auditLogEntries     ContentAuditLog[]    @relation("AuditActor")
+  createdQuestions    Question[]           @relation("QuestionCreatedBy")
+  validationsRecorded QuestionValidation[] @relation("ValidatedBy")
+
+  @@index([email])
+}
+
+model Profile {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timezone              String    @default("UTC")
+  targetExamDate        DateTime?
+  studyStreakDays       Int       @default(0)
+  longestStreakDays     Int       @default(0)
+  lastStudyDate         DateTime?
+  totalStudyTimeSeconds Int       @default(0)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// CSA Blueprint (versioned, admin-editable — never hard-coded in app logic)
+// ---------------------------------------------------------------------------
+
+model BlueprintVersion {
+  id                  String          @id @default(cuid())
+  version             String          @unique // e.g. "2026.1"
+  effectiveDate       DateTime
+  sourceUrl           String?
+  sourceTitle         String?
+  examDurationMinutes Int             @default(90)
+  questionCount       Int             @default(60)
+  status              BlueprintStatus @default(DRAFT)
+  notes               String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  domains ExamDomain[]
+
+  @@index([status])
+}
+
+model ExamDomain {
+  id                 String           @id @default(cuid())
+  blueprintVersionId String
+  blueprintVersion   BlueprintVersion @relation(fields: [blueprintVersionId], references: [id], onDelete: Cascade)
+  code               String // "D1".."D6"
+  name               String
+  description        String?
+  weightPercent      Float
+  sortOrder          Int              @default(0)
+
+  topics         Topic[]
+  questions      Question[]
+  domainProgress UserDomainProgress[]
+
+  @@unique([blueprintVersionId, code])
+  @@index([blueprintVersionId])
+}
+
+model Topic {
+  id        String     @id @default(cuid())
+  domainId  String
+  domain    ExamDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  slug      String     @unique
+  name      String
+  sortOrder Int        @default(0)
+
+  // Structured study-page content (section 18 / 66 of the spec)
+  overview        String?
+  whyItMatters    String?
+  coreConcepts    String? // markdown, may contain bullet lists
+  terminology     String? // markdown
+  howItWorks      String? // markdown
+  adminTasks      String? // "Common Administrator Tasks" markdown
+  examFocus       String? // "CSA Exam Focus" markdown
+  commonTraps     String? // markdown
+  exampleScenario String? // markdown
+
+  validationStatus ValidationStatus @default(DRAFT)
+  lastValidatedAt  DateTime?
+  validationNotes  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  subtopics     Subtopic[]
+  questions     Question[]
+  flashcards    Flashcard[]
+  sources       TopicSource[]
+  topicProgress UserTopicProgress[]
+
+  @@index([domainId])
+}
+
+model Subtopic {
+  id        String @id @default(cuid())
+  topicId   String
+  topic     Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  slug      String @unique
+  name      String
+  sortOrder Int    @default(0)
+
+  questions Question[]
+
+  @@index([topicId])
+}
+
+// ---------------------------------------------------------------------------
+// Documentation sources & validation
+// ---------------------------------------------------------------------------
+
+/// A citable, allow-listed official (or supplementary) source. URLs are only ever
+/// added by an admin/validator flow — never fabricated.
+model DocumentationSource {
+  id             String     @id @default(cuid())
+  title          String
+  url            String
+  domainHost     String // hostname, e.g. "docs.servicenow.com" — checked against the allowlist
+  tier           SourceTier
+  productVersion String? // ServiceNow release the doc applies to, e.g. "Xanadu"
+  fetchedAt      DateTime? // last time this citation was confirmed reachable/relevant
+  excerpt        String? // short supporting excerpt captured at validation time
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  topicSources        TopicSource[]
+  validations         QuestionValidation[] @relation("PrimarySource")
+  conflictValidations QuestionValidation[] @relation("ConflictingSource")
+
+  @@index([domainHost])
+  @@index([tier])
+}
+
+model TopicSource {
+  id       String              @id @default(cuid())
+  topicId  String
+  topic    Topic               @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  sourceId String
+  source   DocumentationSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@unique([topicId, sourceId])
+}
+
+// ---------------------------------------------------------------------------
+// Questions
+// ---------------------------------------------------------------------------
+
+model Question {
+  id           String       @id @default(cuid())
+  questionText String
+  questionType QuestionType
+  difficulty   Difficulty   @default(MEDIUM)
+
+  domainId   String
+  domain     ExamDomain @relation(fields: [domainId], references: [id])
+  topicId    String?
+  topic      Topic?     @relation(fields: [topicId], references: [id])
+  subtopicId String?
+  subtopic   Subtopic?  @relation(fields: [subtopicId], references: [id])
+
+  requiredSelectionCount Int? // for MULTIPLE_SELECT: how many options must be chosen
+
+  explanation String
+  examTip     String?
+
+  // Provenance: every question traces back to how it entered the system.
+  originIsAiGenerated  Boolean @default(false)
+  originImportBatch    String? // e.g. "study-guide-import-2026-08-19"
+  originalImportedText Json? // frozen snapshot of the as-imported question/options/answer for audit (section 33)
+
+  officialSourceTitle String?
+  officialSourceUrl   String?
+  sourceVersion       String? // blueprint/product version this question was authored against
+
+  validationStatus ValidationStatus @default(DRAFT)
+  lastValidatedAt  DateTime?
+  validationNotes  String?
+
+  qualityScore  Int     @default(0) // 0-100, drives exam eligibility (section 57)
+  examEligible  Boolean @default(false) // qualityScore >= 80
+  examPreferred Boolean @default(false) // qualityScore >= 90
+
+  currentVersionNumber Int @default(1)
+
+  createdById String?
+  createdBy   User?    @relation("QuestionCreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  options       QuestionOption[]
+  versions      QuestionVersion[]
+  validations   QuestionValidation[]
+  examQuestions ExamQuestion[]
+  exposures     QuestionExposure[]
+
+  @@index([domainId])
+  @@index([topicId])
+  @@index([validationStatus])
+  @@index([difficulty])
+  @@index([examEligible])
+}
+
+model QuestionOption {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  isCorrect  Boolean  @default(false)
+  sortOrder  Int      @default(0)
+
+  @@index([questionId])
+}
+
+/// Immutable snapshot history. Never delete a version — retire/replace instead.
+model QuestionVersion {
+  id             String           @id @default(cuid())
+  questionId     String
+  question       Question         @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  versionNumber  Int
+  blueprintLabel String? // human label at time of snapshot, e.g. "Current" / "Xanadu"
+  status         ValidationStatus
+  snapshot       Json // full question + options payload at this version
+  changeSummary  String?
+  createdById    String?
+  createdAt      DateTime         @default(now())
+
+  @@unique([questionId, versionNumber])
+  @@index([questionId])
+}
+
+/// One validation event/result for a question against official sources.
+model QuestionValidation {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  status        ValidationStatus
+  validatedAt   DateTime         @default(now())
+  validatedById String?
+  validatedBy   User?            @relation("ValidatedBy", fields: [validatedById], references: [id])
+  isAutomated   Boolean          @default(false)
+
+  primarySourceId String?
+  primarySource   DocumentationSource? @relation("PrimarySource", fields: [primarySourceId], references: [id])
+
+  // Section 64: source conflict handling
+  conflictSourceId String?
+  conflictSource   DocumentationSource? @relation("ConflictingSource", fields: [conflictSourceId], references: [id])
+  hasConflict      Boolean              @default(false)
+
+  originalAnswerText String? // section 33 — what the seed/study guide said
+  verifiedAnswerText String? // what official docs currently indicate
+  changeReason       String?
+  notes              String?
+
+  @@index([questionId])
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Exams & practice attempts
+// ---------------------------------------------------------------------------
+
+model ExamAttempt {
+  id                 String      @id @default(cuid())
+  userId             String
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mode               AttemptMode
+  blueprintVersionId String?
+
+  status           AttemptStatus @default(IN_PROGRESS)
+  durationSeconds  Int // 0 = untimed
+  startedAt        DateTime      @default(now())
+  serverDeadlineAt DateTime? // authoritative — startedAt + durationSeconds; drives auto-submit
+  submittedAt      DateTime?
+
+  totalQuestions  Int    @default(0)
+  correctCount    Int    @default(0)
+  incorrectCount  Int    @default(0)
+  unansweredCount Int    @default(0)
+  scorePercent    Float?
+
+  // filters used to generate this attempt (topic/domain ids, difficulty, etc.) — kept for audit/replay
+  generationParams Json?
+
+  createdAt DateTime @default(now())
+
+  questions ExamQuestion[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([mode])
+}
+
+model ExamQuestion {
+  id          String      @id @default(cuid())
+  attemptId   String
+  attempt     ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId  String
+  question    Question    @relation(fields: [questionId], references: [id])
+  orderIndex  Int
+  optionOrder Json // array of QuestionOption ids in the randomized order shown to the user
+
+  // snapshots at generation time, so later edits to the question don't retroactively change a locked attempt
+  domainIdSnapshot   String
+  topicIdSnapshot    String?
+  difficultySnapshot Difficulty
+
+  isFlagged Boolean @default(false)
+
+  answer ExamAnswer?
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+}
+
+model ExamAnswer {
+  id                  String       @id @default(cuid())
+  examQuestionId      String       @unique
+  examQuestion        ExamQuestion @relation(fields: [examQuestionId], references: [id], onDelete: Cascade)
+  selectedOptionIds   Json         @default("[]")
+  isCorrect           Boolean?
+  confidenceRating    Int? // 1-5, section 52
+  responseTimeSeconds Int?
+  answeredAt          DateTime?
+  updatedAt           DateTime     @updatedAt
+}
+
+model StudySession {
+  id                String    @id @default(cuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mode              String // "topic_read" | "flashcards" | "cheat_sheet" | practice AttemptMode values
+  topicId           String?
+  domainId          String?
+  startedAt         DateTime  @default(now())
+  endedAt           DateTime?
+  questionsAnswered Int       @default(0)
+  correctAnswers    Int       @default(0)
+
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Flashcards
+// ---------------------------------------------------------------------------
+
+model Flashcard {
+  id                 String  @id @default(cuid())
+  term               String
+  definition         String
+  contrastTerm       String? // e.g. "Client Script" when term is "UI Policy" — for A vs B pairs
+  contrastDefinition String?
+  topicId            String?
+  topic              Topic?  @relation(fields: [topicId], references: [id])
+
+  validationStatus    ValidationStatus @default(DRAFT)
+  officialSourceTitle String?
+  officialSourceUrl   String?
+  lastValidatedAt     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reviews FlashcardReview[]
+
+  @@index([topicId])
+}
+
+model FlashcardReview {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  flashcardId    String
+  flashcard      Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
+  timesReviewed  Int       @default(0)
+  timesKnown     Int       @default(0)
+  lastReviewedAt DateTime?
+  nextDueAt      DateTime?
+
+  @@unique([userId, flashcardId])
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Bookmarks & notes
+// ---------------------------------------------------------------------------
+
+model Bookmark {
+  id         String             @id @default(cuid())
+  userId     String
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entityType BookmarkEntityType
+  entityId   String
+  createdAt  DateTime           @default(now())
+
+  @@unique([userId, entityType, entityId])
+  @@index([userId])
+}
+
+model Note {
+  id         String             @id @default(cuid())
+  userId     String
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entityType BookmarkEntityType
+  entityId   String
+  content    String
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+
+  @@index([userId, entityType, entityId])
+}
+
+// ---------------------------------------------------------------------------
+// Progress & mastery tracking
+// ---------------------------------------------------------------------------
+
+model UserTopicProgress {
+  id                String    @id @default(cuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topicId           String
+  topic             Topic     @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  questionsAnswered Int       @default(0)
+  correctAnswers    Int       @default(0)
+  lastPracticedAt   DateTime?
+
+  @@unique([userId, topicId])
+  @@index([userId])
+}
+
+model UserDomainProgress {
+  id                String     @id @default(cuid())
+  userId            String
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domainId          String
+  domain            ExamDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  questionsAnswered Int        @default(0)
+  correctAnswers    Int        @default(0)
+  lastPracticedAt   DateTime?
+
+  @@unique([userId, domainId])
+  @@index([userId])
+}
+
+/// Per-user, per-question exposure — powers "avoid repeating mastered/recently-seen questions".
+model QuestionExposure {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId     String
+  question       Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  timesSeen      Int       @default(0)
+  timesCorrect   Int       @default(0)
+  timesIncorrect Int       @default(0)
+  lastSeenAt     DateTime?
+  lastCorrectAt  DateTime?
+  avgConfidence  Float?
+
+  @@unique([userId, questionId])
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// Audit trail
+// ---------------------------------------------------------------------------
+
+model ContentAuditLog {
+  id         String             @id @default(cuid())
+  entityType String // "question" | "topic" | "flashcard" | "documentation_source" | "blueprint_version"
+  entityId   String
+  action     ContentAuditAction
+  actorId    String?
+  actor      User?              @relation("AuditActor", fields: [actorId], references: [id])
+  before     Json?
+  after      Json?
+  notes      String?
+  createdAt  DateTime           @default(now())
+
+  @@index([entityType, entityId])
+  @@index([actorId])
+}
