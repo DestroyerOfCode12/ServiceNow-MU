@@ -5,6 +5,7 @@ import { TOPIC_CONTENT } from "../../../prisma/seed-data/topic-content";
 import { TOPIC_SOURCES } from "../../../prisma/seed-data/topic-sources";
 import { FLASHCARDS } from "../../../prisma/seed-data/flashcards";
 import { SUPPLEMENTAL_QUESTIONS } from "../../../prisma/seed-data/supplemental-questions";
+import { ACHIEVEMENTS } from "../../../prisma/seed-data/achievements";
 import rawImportedQuestions from "../../../prisma/seed-data/imported-questions.raw.json";
 import { mapQuestionToTopicSlug } from "../import/topic-mapper";
 import { estimateDifficulty } from "../import/difficulty-heuristic";
@@ -233,6 +234,15 @@ export async function runSeed(prisma: PrismaClient, adminEmail: string, adminPas
   const statusCounts: Record<string, number> = {};
 
   for (const q of raw) {
+    // Idempotency guard: re-running the seed (a normal dev/db-reset workflow)
+    // must not re-import the same 120 questions a second time. questionText
+    // is unique enough within a single import batch for this purpose.
+    const alreadyImported = await prisma.question.findFirst({
+      where: { questionText: q.question_text, originImportBatch: IMPORT_BATCH },
+      select: { id: true },
+    });
+    if (alreadyImported) continue;
+
     const topicSlug = mapQuestionToTopicSlug({
       questionText: q.question_text,
       explanation: q.explanation_lines.join(" "),
@@ -375,6 +385,13 @@ export async function runSeed(prisma: PrismaClient, adminEmail: string, adminPas
   // -------------------------------------------------------------------
   let supplementalCount = 0;
   for (const q of SUPPLEMENTAL_QUESTIONS) {
+    // Same idempotency guard as the imported-question loop above.
+    const alreadySeeded = await prisma.question.findFirst({
+      where: { questionText: q.questionText, originImportBatch: "supplemental-authored-2026-08-19" },
+      select: { id: true },
+    });
+    if (alreadySeeded) continue;
+
     const topicId = topicIdBySlug.get(q.topicSlug);
     const topic = topicId ? await prisma.topic.findUnique({ where: { id: topicId } }) : null;
     const domainId = topic?.domainId;
@@ -458,6 +475,37 @@ export async function runSeed(prisma: PrismaClient, adminEmail: string, adminPas
     supplementalCount++;
   }
   say(`Seeded ${supplementalCount} original supplemental questions (Domain 1 & 2 coverage).`);
+
+  // -------------------------------------------------------------------
+  // 6. Gamification: starter achievement set
+  // -------------------------------------------------------------------
+  let achievementCount = 0;
+  for (const a of ACHIEVEMENTS) {
+    await prisma.achievement.upsert({
+      where: { code: a.code },
+      update: {
+        name: a.name,
+        description: a.description,
+        icon: a.icon,
+        criteriaType: a.criteriaType,
+        criteriaThreshold: a.criteriaThreshold ?? null,
+        xpReward: a.xpReward,
+        sortOrder: a.sortOrder,
+      },
+      create: {
+        code: a.code,
+        name: a.name,
+        description: a.description,
+        icon: a.icon,
+        criteriaType: a.criteriaType,
+        criteriaThreshold: a.criteriaThreshold ?? null,
+        xpReward: a.xpReward,
+        sortOrder: a.sortOrder,
+      },
+    });
+    achievementCount++;
+  }
+  say(`Seeded ${achievementCount} achievements.`);
 
   // -------------------------------------------------------------------
   // Summary

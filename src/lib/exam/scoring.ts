@@ -1,6 +1,14 @@
-import { AttemptStatus } from "@prisma/client";
+import { AttemptMode, AttemptStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { isAnswerCorrect } from "./answer-check";
+import { awardXp, XP_AWARDS } from "@/lib/gamification/xp";
+import { checkAndUnlockAchievements, type UnlockedAchievement } from "@/lib/gamification/achievements";
+
+// Only these modes count as a completed "exam" for XP/achievement purposes —
+// quick/topic/domain/weak-area/random practice are untimed drilling, not the
+// exam-simulation experience the EXAM_COMPLETED bonus and EXAMS_COMPLETED
+// achievement are meant to reward.
+const EXAM_LIKE_MODES: AttemptMode[] = [AttemptMode.FULL_EXAM, AttemptMode.TIMED_PRACTICE];
 
 /**
  * Scores every answered question in an attempt. No partial credit:
@@ -26,7 +34,8 @@ export async function scoreAttempt(attemptId: string, userId: string) {
 
   if (attempt.userId !== userId) throw new Error("Not your attempt.");
   if (attempt.status !== AttemptStatus.IN_PROGRESS) {
-    return attempt; // already scored — idempotent
+    // Already scored — idempotent. No NEW xp/achievements on a re-submit.
+    return { ...attempt, xpAwarded: 0, unlockedAchievements: [] as UnlockedAchievement[] };
   }
 
   let correctCount = 0;
@@ -125,20 +134,47 @@ export async function scoreAttempt(attemptId: string, userId: string) {
     },
   });
 
-  await updateStudyStreak(userId);
+  const streakIncremented = await updateStudyStreak(userId);
 
-  return updated;
+  // XP: per-correct-answer, plus a completion bonus for exam-like modes.
+  // Both are logged with attemptId so a client can look up exactly what
+  // this submission earned (see XPEvent.attemptId).
+  let xpAwarded = 0;
+  if (correctCount > 0) {
+    const amount = correctCount * XP_AWARDS.CORRECT_ANSWER;
+    await awardXp(prisma, userId, amount, "CORRECT_ANSWER", attemptId);
+    xpAwarded += amount;
+  }
+  if (EXAM_LIKE_MODES.includes(attempt.mode)) {
+    await awardXp(prisma, userId, XP_AWARDS.EXAM_COMPLETED, "EXAM_COMPLETED", attemptId);
+    xpAwarded += XP_AWARDS.EXAM_COMPLETED;
+  }
+  if (streakIncremented) {
+    await awardXp(prisma, userId, XP_AWARDS.STREAK_DAY, "STREAK_DAY", attemptId);
+    xpAwarded += XP_AWARDS.STREAK_DAY;
+  }
+
+  // Runs last so achievements that depend on the progress/streak/XP work
+  // above (e.g. STREAK_DAYS, QUESTIONS_ANSWERED) see this submission's effects.
+  const unlockedAchievements = await checkAndUnlockAchievements(prisma, userId);
+
+  return { ...updated, xpAwarded, unlockedAchievements };
 }
 
-/** Updates the user's daily study streak (spec section 37). */
-export async function updateStudyStreak(userId: string) {
+/**
+ * Updates the user's daily study streak (spec section 37).
+ * Returns true iff the streak count actually changed (i.e. a new day was
+ * counted) — the caller uses this to decide whether a STREAK_DAY XP event
+ * is warranted, since re-submitting within the same day must not re-award it.
+ */
+export async function updateStudyStreak(userId: string): Promise<boolean> {
   const profile = await prisma.profile.findUnique({ where: { userId } });
-  if (!profile) return;
+  if (!profile) return false;
 
   const today = startOfDay(new Date());
   const last = profile.lastStudyDate ? startOfDay(profile.lastStudyDate) : null;
 
-  if (last && last.getTime() === today.getTime()) return; // already counted today
+  if (last && last.getTime() === today.getTime()) return false; // already counted today
 
   const oneDayMs = 24 * 60 * 60 * 1000;
   const isConsecutive = last && today.getTime() - last.getTime() === oneDayMs;
@@ -152,6 +188,7 @@ export async function updateStudyStreak(userId: string) {
       lastStudyDate: today,
     },
   });
+  return true;
 }
 
 function startOfDay(d: Date): Date {
