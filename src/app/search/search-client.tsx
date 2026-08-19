@@ -20,18 +20,27 @@ export function SearchClient() {
 
   useEffect(() => {
     const query = searchParams.get("q") ?? "";
-    setQ(query);
-    if (query.length < 2) {
-      setResults(null);
-      return;
-    }
-    setLoading(true);
     const controller = new AbortController();
-    fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal })
-      .then((r) => r.json())
-      .then(setResults)
-      .catch(() => {})
-      .finally(() => setLoading(false));
+
+    // Runs as a microtask rather than synchronously in the effect body, so
+    // the initial state update is a reaction to this effect's own async
+    // work (the fetch/clear decision) rather than a same-tick render cascade.
+    Promise.resolve().then(async () => {
+      if (query.length < 2) {
+        setResults(null);
+        return;
+      }
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
+        setResults(await res.json());
+      } catch {
+        // aborted or network error — leave previous results as-is
+      } finally {
+        setLoading(false);
+      }
+    });
+
     return () => controller.abort();
   }, [searchParams]);
 

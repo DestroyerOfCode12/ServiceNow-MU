@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import { PrismaClient, ValidationStatus, QuestionType, Difficulty, ContentAuditAction, Role } from "@prisma/client";
+import { PrismaClient, ValidationStatus, QuestionType, ContentAuditAction, Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { BLUEPRINT_VERSION, DOMAINS } from "./seed-data/blueprint";
 import { TOPIC_CONTENT } from "./seed-data/topic-content";

@@ -36,7 +36,11 @@ export function classifySourceUrl(url: string): HostClassification {
     return { isAllowed: false, tier: null, host: "" };
   }
 
-  const match = ALLOWED_SOURCE_HOSTS.find((h) => host === h.host || host.endsWith(`.${h.host}`));
+  // Prefer the most specific (longest) matching host, not just the first array
+  // entry that happens to match — e.g. "developer.servicenow.com" must win
+  // over the more generic "servicenow.com" suffix match.
+  const candidates = ALLOWED_SOURCE_HOSTS.filter((h) => host === h.host || host.endsWith(`.${h.host}`));
+  const match = candidates.sort((a, b) => b.host.length - a.host.length)[0];
   if (!match) return { isAllowed: false, tier: null, host };
 
   // Community forum / blog paths on servicenow.com are official but not

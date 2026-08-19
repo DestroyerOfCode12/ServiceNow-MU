@@ -37,7 +37,7 @@ const WEIGHTS = {
   consistency: 0.1,
 };
 
-function bandFor(score: number): ReadinessResult["band"] {
+export function bandFor(score: number): ReadinessResult["band"] {
   if (score >= 90) return "Exam ready";
   if (score >= 75) return "Strong preparation";
   if (score >= 60) return "Developing readiness";

@@ -28,7 +28,7 @@ export function distributeQuestions(domains: WeightedDomain[], totalQuestions: n
     return { id: d.id, exact, floor: Math.floor(exact), remainder: exact - Math.floor(exact) };
   });
 
-  let allocated = shares.reduce((sum, s) => sum + s.floor, 0);
+  const allocated = shares.reduce((sum, s) => sum + s.floor, 0);
   let remaining = totalQuestions - allocated;
 
   // Hand out leftover slots to the largest remainders first; ties broken by
