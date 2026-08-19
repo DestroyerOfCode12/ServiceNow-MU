@@ -1,5 +1,6 @@
 import { AttemptStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { isAnswerCorrect } from "./answer-check";
 
 /**
  * Scores every answered question in an attempt. No partial credit:
@@ -38,11 +39,10 @@ export async function scoreAttempt(attemptId: string, userId: string) {
 
   for (const eq of attempt.questions) {
     const selected: string[] = Array.isArray(eq.answer?.selectedOptionIds) ? (eq.answer!.selectedOptionIds as string[]) : [];
-    const correctOptionIds = eq.question.options.filter((o) => o.isCorrect).map((o) => o.id).sort();
-    const selectedSorted = [...selected].sort();
+    const correctOptionIds = eq.question.options.filter((o) => o.isCorrect).map((o) => o.id);
 
     const answered = selected.length > 0;
-    const isCorrect = answered && arraysEqual(selectedSorted, correctOptionIds);
+    const isCorrect = isAnswerCorrect(correctOptionIds, selected);
 
     if (!answered) unansweredCount++;
     else if (isCorrect) correctCount++;
@@ -128,11 +128,6 @@ export async function scoreAttempt(attemptId: string, userId: string) {
   await updateStudyStreak(userId);
 
   return updated;
-}
-
-function arraysEqual(a: string[], b: string[]): boolean {
-  if (a.length !== b.length) return false;
-  return a.every((v, i) => v === b[i]);
 }
 
 /** Updates the user's daily study streak (spec section 37). */

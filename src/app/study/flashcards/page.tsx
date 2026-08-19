@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { shuffle } from "@/lib/shuffle";
 import { SubTabs } from "@/components/nav/sub-tabs";
 import { STUDY_TABS } from "@/components/nav/nav-links";
 import { FlashcardDeck } from "./flashcard-deck";
@@ -9,8 +10,8 @@ export default async function FlashcardsPage() {
     orderBy: { createdAt: "asc" },
   });
 
-  // Shuffle deterministically per request (server-rendered, so this is per page load).
-  const shuffled = [...cards].sort(() => Math.random() - 0.5);
+  // Shuffle per request (server-rendered, so this is a fresh order per page load).
+  const shuffled = shuffle(cards);
 
   return (
     <div>

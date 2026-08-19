@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { ClientAttempt, ClientQuestion } from "@/lib/exam/types";
+import { formatTime } from "@/lib/format-time";
 
 const MODE_TITLES: Record<string, string> = {
   FULL_EXAM: "ServiceNow CSA Practice Exam",
@@ -18,15 +19,6 @@ const MODE_TITLES: Record<string, string> = {
   RANDOM_PRACTICE: "Random Practice",
 };
 
-function formatTime(seconds: number): string {
-  const s = Math.max(0, Math.floor(seconds));
-  const h = Math.floor(s / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const sec = s % 60;
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return h > 0 ? `${pad(h)}:${pad(m)}:${pad(sec)}` : `${pad(m)}:${pad(sec)}`;
-}
-
 export function AttemptRunner({ attempt }: { attempt: ClientAttempt }) {
   const router = useRouter();
   const [questions, setQuestions] = useState<ClientQuestion[]>(attempt.questions);
@@ -36,9 +28,9 @@ export function AttemptRunner({ attempt }: { attempt: ClientAttempt }) {
   const [saveError, setSaveError] = useState<string | null>(null);
 
   const deadline = attempt.serverDeadlineAt ? new Date(attempt.serverDeadlineAt).getTime() : null;
-  const [remaining, setRemaining] = useState<number | null>(deadline ? Math.max(0, (deadline - Date.now()) / 1000) : null);
+  const [remaining, setRemaining] = useState<number | null>(null);
   const autoSubmitted = useRef(false);
-  const questionEnteredAt = useRef<number>(Date.now());
+  const questionEnteredAt = useRef<number>(0);
 
   const current = questions[index];
   const answeredCount = questions.filter((q) => q.selectedOptionIds.length > 0).length;

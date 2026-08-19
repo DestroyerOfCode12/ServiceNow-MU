@@ -2,6 +2,7 @@ import { AttemptMode, Difficulty } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { selectQuestions } from "./question-selector";
 import { distributeQuestions, rebalanceForAvailability, type WeightedDomain } from "./distribution";
+import { shuffle } from "@/lib/shuffle";
 
 export interface AttemptPlanItem {
   domainId?: string;
@@ -18,15 +19,6 @@ export interface GenerateAttemptParams {
   examEligibleOnly: boolean;
   blueprintVersionId?: string;
   generationParams?: Record<string, unknown>;
-}
-
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
 }
 
 /** Builds the per-domain plan for a full, blueprint-weighted exam of `totalQuestions`. */
