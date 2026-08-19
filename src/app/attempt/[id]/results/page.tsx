@@ -66,7 +66,13 @@ export default async function ResultsPage({ params }: { params: Promise<{ id: st
           </CardHeader>
           <CardBody>
             <DomainPerformanceChart
-              data={analysis.domainBreakdown.map((d) => ({ domain: d.domainName, correct: d.correct, total: d.total, accuracy: d.accuracy }))}
+              data={analysis.domainBreakdown.map((d) => ({
+                domainCode: d.domainCode,
+                domainName: d.domainName,
+                correct: d.correct,
+                total: d.total,
+                accuracy: d.accuracy,
+              }))}
             />
           </CardBody>
         </Card>
