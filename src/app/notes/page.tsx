@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { NotesList, type NoteRow } from "./notes-list";
+
+export const metadata: Metadata = { title: "Notes · CSA Prep Platform" };
 
 export default async function NotesPage() {
   const user = await getCurrentUser();

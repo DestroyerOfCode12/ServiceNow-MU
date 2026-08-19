@@ -1,10 +1,12 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/current-user";
+import { prisma } from "@/lib/prisma";
 import { loadAttemptDetail } from "@/lib/exam/attempt-analysis";
 import { Card, CardBody } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/button";
+import { BookmarkButton } from "@/components/bookmark-button";
 import { clsx } from "clsx";
 
 export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
@@ -15,6 +17,14 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
   const attempt = await loadAttemptDetail(id);
   if (!attempt || attempt.userId !== user.id) notFound();
   if (attempt.status === "IN_PROGRESS") redirect(`/attempt/${id}`);
+
+  // One query for every question's bookmark state, rather than N+1 per card.
+  const questionIds = attempt.questions.map((eq) => eq.questionId);
+  const existingBookmarks = await prisma.bookmark.findMany({
+    where: { userId: user.id, entityType: "QUESTION", entityId: { in: questionIds } },
+    select: { entityId: true },
+  });
+  const bookmarkedQuestionIds = new Set(existingBookmarks.map((b) => b.entityId));
 
   return (
     <div className="container-page py-10">
@@ -47,6 +57,13 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
                   ) : (
                     <Badge variant="danger">Incorrect</Badge>
                   )}
+                  <div className="ml-auto">
+                    <BookmarkButton
+                      entityType="QUESTION"
+                      entityId={eq.questionId}
+                      initialBookmarked={bookmarkedQuestionIds.has(eq.questionId)}
+                    />
+                  </div>
                 </div>
 
                 <p className="font-medium text-foreground">{eq.question.questionText}</p>

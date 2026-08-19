@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 
-const PROTECTED_PREFIXES = ["/dashboard", "/practice", "/exams", "/progress", "/bookmarks", "/notes", "/admin", "/study/flashcards/review"];
+const PROTECTED_PREFIXES = ["/dashboard", "/practice", "/exams", "/progress", "/bookmarks", "/notes", "/admin", "/search"];
 const ADMIN_PREFIXES = ["/admin"];
 
 export default auth((req) => {
@@ -24,5 +24,14 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/practice/:path*", "/exams/:path*", "/progress/:path*", "/bookmarks/:path*", "/notes/:path*", "/admin/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/practice/:path*",
+    "/exams/:path*",
+    "/progress/:path*",
+    "/bookmarks/:path*",
+    "/notes/:path*",
+    "/admin/:path*",
+    "/search/:path*",
+  ],
 };

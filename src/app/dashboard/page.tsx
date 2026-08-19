@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/current-user";
@@ -7,6 +8,8 @@ import { getLifetimeXp, levelFromXp } from "@/lib/gamification/xp";
 import { Card, CardBody } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
+
+export const metadata: Metadata = { title: "Dashboard · CSA Prep Platform" };
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
