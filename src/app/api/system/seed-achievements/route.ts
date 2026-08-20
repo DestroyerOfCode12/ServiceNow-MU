@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { safeTokenEquals } from "@/lib/auth-token";
 import { prisma } from "@/lib/prisma";
 import { ACHIEVEMENTS } from "../../../../../prisma/seed-data/achievements";
 
@@ -19,7 +20,7 @@ export async function POST(req: Request) {
 
   const authHeader = req.headers.get("authorization") ?? "";
   const provided = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
-  if (provided !== token) {
+  if (!safeTokenEquals(provided, token)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 

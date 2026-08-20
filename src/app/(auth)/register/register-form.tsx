@@ -103,6 +103,17 @@ export function RegisterForm({ oauthProviders }: { oauthProviders: OAuthProvider
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Creating account…" : "Create account"}
             </Button>
+            <p className="text-center text-xs text-foreground-muted">
+              By creating an account, you agree to our{" "}
+              <Link href="/terms" className="underline hover:text-foreground">
+                Terms
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="underline hover:text-foreground">
+                Privacy Policy
+              </Link>
+              .
+            </p>
           </form>
           <OAuthButtons providers={oauthProviders} callbackUrl="/dashboard" />
           <p className="mt-4 text-center text-sm text-foreground-muted">
