@@ -92,15 +92,22 @@ enum ContentAuditAction {
 // ---------------------------------------------------------------------------
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  name         String?
-  role         Role     @default(USER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  // Nullable: a user who only ever signs in via GitHub/Google/Microsoft has
+  // no password of their own. Credentials-provider sign-in checks for null
+  // and rejects it (never silently "succeeds" against an empty hash).
+  passwordHash  String?
+  name          String?
+  image         String? // avatar URL, populated from the OAuth provider's profile
+  emailVerified DateTime? // set on OAuth sign-in (provider already verified it) — standard Auth.js field
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   profile             Profile?
+  accounts            Account[]
+  sessions            Session[]
   examAttempts        ExamAttempt[]
   studySessions       StudySession[]
   flashcardReviews    FlashcardReview[]
@@ -116,6 +123,54 @@ model User {
   achievements        UserAchievement[]
 
   @@index([email])
+}
+
+// ---------------------------------------------------------------------------
+// OAuth (Auth.js standard schema — GitHub, Google, Microsoft Entra ID)
+// ---------------------------------------------------------------------------
+
+/// One row per (provider, account) a user has linked — e.g. a user who signs
+/// in with both Google and GitHub has two Account rows pointing at the same
+/// User. Session strategy is JWT (see auth.ts), so Session below is never
+/// actually written during normal sign-in, but the PrismaAdapter's type
+/// still expects the model to exist — keeping the canonical shape here
+/// leaves database sessions as a drop-in option later with no new migration.
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
 
 model Profile {

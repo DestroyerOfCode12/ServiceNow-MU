@@ -56,6 +56,10 @@ export function TopNav() {
                   <path d="M21 21l-4.3-4.3" />
                 </svg>
               </Link>
+              {session.user?.image ? (
+                // eslint-disable-next-line @next/next/no-img-element -- an arbitrary OAuth provider's avatar URL (GitHub/Google/Microsoft), not a first-party asset next/image's remotePatterns would need listing three ways for
+                <img src={session.user.image} alt="" className="h-7 w-7 rounded-full" referrerPolicy="no-referrer" />
+              ) : null}
               <span className="hidden text-sm text-foreground-muted md:inline">{session.user?.name ?? session.user?.email}</span>
               <Button variant="secondary" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>
                 Sign out

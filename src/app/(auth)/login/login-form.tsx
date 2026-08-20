@@ -6,14 +6,32 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { OAuthButtons, type OAuthProvidersEnabled } from "@/components/oauth-buttons";
 
-function LoginForm() {
+// NextAuth redirects back here with `?error=<code>` when an OAuth sign-in
+// fails server-side (wrong callback URL registered on the provider, an
+// email already tied to a different unlinked account, the user cancelling
+// on the provider's consent screen, etc.) — a full-page redirect, so it
+// can't be caught client-side the way the credentials form's own submit
+// handler catches its errors. Without this, that failure was silently
+// invisible: the user just lands back on a blank login form.
+const OAUTH_ERROR_MESSAGES: Record<string, string> = {
+  OAuthAccountNotLinked: "That email is already used by a different sign-in method. Try signing in with your original method.",
+  OAuthSignin: "Couldn't start the sign-in with that provider. Please try again.",
+  OAuthCallback: "Something went wrong completing sign-in with that provider. Please try again.",
+  AccessDenied: "Sign-in was cancelled or denied.",
+};
+
+function LoginForm({ oauthProviders }: { oauthProviders: OAuthProvidersEnabled }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
+  const oauthErrorCode = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    oauthErrorCode ? (OAUTH_ERROR_MESSAGES[oauthErrorCode] ?? "Sign-in failed. Please try again.") : null,
+  );
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
@@ -70,6 +88,7 @@ function LoginForm() {
               {loading ? "Signing in…" : "Sign in"}
             </Button>
           </form>
+          <OAuthButtons providers={oauthProviders} callbackUrl={callbackUrl} />
           <p className="mt-4 text-center text-sm text-foreground-muted">
             No account?{" "}
             <Link href="/register" className="font-medium text-accent hover:underline">
@@ -93,10 +112,10 @@ function Field({ label, id, children }: { label: string; id: string; children: R
   );
 }
 
-export function LoginFormWithSuspense() {
+export function LoginFormWithSuspense({ oauthProviders }: { oauthProviders: OAuthProvidersEnabled }) {
   return (
     <Suspense>
-      <LoginForm />
+      <LoginForm oauthProviders={oauthProviders} />
     </Suspense>
   );
 }

@@ -6,8 +6,9 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { OAuthButtons, type OAuthProvidersEnabled } from "@/components/oauth-buttons";
 
-export function RegisterForm() {
+export function RegisterForm({ oauthProviders }: { oauthProviders: OAuthProvidersEnabled }) {
   const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
@@ -103,6 +104,7 @@ export function RegisterForm() {
               {loading ? "Creating account…" : "Create account"}
             </Button>
           </form>
+          <OAuthButtons providers={oauthProviders} callbackUrl="/dashboard" />
           <p className="mt-4 text-center text-sm text-foreground-muted">
             Already have an account?{" "}
             <Link href="/login" className="font-medium text-accent hover:underline">

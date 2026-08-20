@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
+import { OAUTH_PROVIDERS_ENABLED } from "@/auth";
 import { RegisterForm } from "./register-form";
 
 // See login/page.tsx for the same reasoning: a server component wrapper so
@@ -9,5 +10,5 @@ export default async function RegisterPage() {
   const user = await getCurrentUser();
   if (user) redirect("/dashboard");
 
-  return <RegisterForm />;
+  return <RegisterForm oauthProviders={OAUTH_PROVIDERS_ENABLED} />;
 }
