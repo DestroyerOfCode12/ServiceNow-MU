@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-surface">
@@ -13,6 +15,14 @@ export function Footer() {
           Practice scores are an internal readiness indicator only and do not represent an official ServiceNow
           pass/fail determination. ServiceNow does not publish its CSA exam cut score.
         </p>
+        <nav aria-label="Legal" className="flex gap-4 pt-2">
+          <Link href="/privacy" className="hover:text-foreground hover:underline">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="hover:text-foreground hover:underline">
+            Terms of Service
+          </Link>
+        </nav>
       </div>
     </footer>
   );
