@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/current-user";
+import { OAUTH_PROVIDERS_ENABLED } from "@/auth";
 import { LoginFormWithSuspense } from "./login-form";
 
 // Server component wrapper so an already-authenticated visitor gets a real
@@ -16,5 +17,5 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     redirect(callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/dashboard");
   }
 
-  return <LoginFormWithSuspense />;
+  return <LoginFormWithSuspense oauthProviders={OAUTH_PROVIDERS_ENABLED} />;
 }

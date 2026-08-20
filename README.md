@@ -13,7 +13,7 @@ documentation rather than trusting the source study guide blindly.
 
 - Next.js 16 (App Router) + TypeScript + Tailwind CSS v4
 - PostgreSQL + Prisma ORM
-- Auth.js (NextAuth v5), credentials + bcrypt
+- Auth.js (NextAuth v5), credentials + bcrypt, plus optional GitHub/Google/Microsoft OAuth
 - Zod validation, Recharts, Vitest
 
 ## Getting started
@@ -34,6 +34,55 @@ Seeding creates:
   canonical topics with study content, ~23 flashcards, and 139 practice
   questions (120 imported from the supplied study guide + 19 originally
   authored to cover Domain 1/2, which the source study guide barely touched).
+
+## OAuth sign-in (GitHub / Google / Microsoft)
+
+Entirely optional — every provider is opt-in per env var, and email/password
+sign-in keeps working with zero of them set. A provider only shows a button on
+the login page once *both* its vars below are present.
+
+An OAuth sign-in links by verified email to an existing password-based
+account with the same address (rather than creating a confusing second
+account) — see `allowDangerousEmailAccountLinking` in `src/auth.ts` for why
+that's safe specifically for these three providers.
+
+**1. Register an app with each provider you want**, using this callback URL
+(swap in your real domain for production):
+
+```
+http://localhost:3000/api/auth/callback/github
+http://localhost:3000/api/auth/callback/google
+http://localhost:3000/api/auth/callback/microsoft-entra-id
+```
+
+- **GitHub**: [github.com/settings/developers](https://github.com/settings/developers)
+  → *New OAuth App*. "Authorization callback URL" = the `github` URL above.
+- **Google**: [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+  → *Create Credentials → OAuth client ID* (type: Web application). "Authorized
+  redirect URIs" = the `google` URL above. You'll also need to configure the
+  OAuth consent screen if you haven't already.
+- **Microsoft**: [Entra admin center](https://entra.microsoft.com) → *App
+  registrations → New registration*. Redirect URI (platform: Web) = the
+  `microsoft-entra-id` URL above. Under *Certificates & secrets*, create a
+  new client secret (copy its **value**, not its ID — it's only shown once).
+
+**2. Set the matching env vars** (`.env` locally; your host's environment
+variable settings in production — e.g. Netlify's site settings):
+
+```bash
+AUTH_GITHUB_ID="..."
+AUTH_GITHUB_SECRET="..."
+AUTH_GOOGLE_ID="..."
+AUTH_GOOGLE_SECRET="..."
+AUTH_MICROSOFT_ENTRA_ID_ID="..."
+AUTH_MICROSOFT_ENTRA_ID_SECRET="..."
+# Optional — omit to allow sign-in from any Microsoft account (personal,
+# school, or work). Set this to restrict to just your own org/tenant:
+# AUTH_MICROSOFT_ENTRA_ID_ISSUER="https://login.microsoftonline.com/<tenant-id>/v2.0"
+```
+
+Restart the dev server (or redeploy) after setting them — Next.js only reads
+env vars at process start.
 
 ## Scripts
 
