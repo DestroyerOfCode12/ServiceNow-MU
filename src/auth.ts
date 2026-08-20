@@ -8,6 +8,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/lib/validation/auth";
+import { authConfig } from "./auth.config";
 
 /**
  * Each OAuth provider is opt-in: only registered when its env vars are
@@ -85,6 +86,11 @@ export const OAUTH_PROVIDERS_ENABLED = {
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // Spreads in the edge-safe pages/callbacks from auth.config.ts (shared
+  // with proxy.ts's lightweight instance) and adds everything that needs
+  // the Node runtime: the adapter, bcrypt-based Credentials provider, and
+  // the OAuth providers' client secrets.
+  ...authConfig,
   // Persists OAuth Account rows (and creates a User row for a first-time
   // OAuth sign-in) even though sessions themselves stay JWT-based below —
   // Credentials provider requires JWT sessions, but an adapter can still be
@@ -92,9 +98,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   // supported "hybrid" setup for mixing Credentials with OAuth providers.
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
-  pages: {
-    signIn: "/login",
-  },
   providers,
   events: {
     // The adapter creates the User row for a first-time OAuth sign-in, but
@@ -113,20 +116,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     },
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id as string;
-        token.role = (user as { role?: string }).role ?? "USER";
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = (token.role as "USER" | "ADMIN") ?? "USER";
-      }
-      return session;
-    },
-  },
+  // jwt/session callbacks come from the ...authConfig spread above — no
+  // Prisma/bcrypt involved in either, so they're identical whether the
+  // token is minted here (full config) or just decoded in proxy.ts's
+  // lightweight edge instance.
 });
