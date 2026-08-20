@@ -30,8 +30,7 @@ export default function TermsPage() {
           <p className="mt-2">
             CSA Prep Platform (&ldquo;the platform&rdquo;, &ldquo;we&rdquo;) is an independent, unofficial study and
             practice-exam tool for candidates preparing for ServiceNow&apos;s Certified System Administrator (CSA)
-            exam. It is operated by{" "}
-            <span className="font-mono text-danger">[BUSINESS/OPERATOR LEGAL NAME — REQUIRED]</span>.
+            exam. It is operated by Jacob Essel Mkhwanazi, an individual (not a registered company).
           </p>
           <p className="mt-2">
             <strong>We are not affiliated with, endorsed by, or sponsored by ServiceNow, Inc.</strong>{" "}
@@ -91,12 +90,13 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">6. Limitation of liability</h2>
           <p className="mt-2">
-            To the maximum extent permitted by applicable law, the operator is not liable for indirect, incidental,
+            To the maximum extent permitted by South African law, the operator is not liable for indirect, incidental,
             or consequential damages arising from your use of, or inability to use, the platform — including exam
             results.{" "}
             <span className="font-mono text-danger">
-              [CONFIRM: any liability cap or jurisdiction-specific carve-outs should be reviewed by a lawyer before
-              this is relied on]
+              [CONFIRM: South Africa&apos;s Consumer Protection Act restricts what liability a business can exclude
+              toward a consumer — whether, and how, that applies here should be reviewed by a South African lawyer
+              before this clause is relied on]
             </span>
           </p>
         </section>
@@ -104,20 +104,19 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">7. Pricing</h2>
           <p className="mt-2">
-            <span className="font-mono text-danger">
-              [CONFIRM: is the platform free, freemium, or paid? This section should describe current pricing and,
-              if payment is ever introduced, refund/cancellation terms — none exist yet because the platform doesn&apos;t
-              process payments today]
-            </span>
+            The platform is free to use. There is no payment or subscription required for any current feature. We
+            may, in the future, offer an optional way to support the platform with a voluntary donation — a donation
+            is not a purchase, carries no additional entitlement or guarantee beyond what&apos;s already free, and no
+            such mechanism exists on the platform today. If that changes, this section will be updated with the
+            actual terms before it launches, not after.
           </p>
         </section>
 
         <section>
           <h2 className="text-xl font-semibold text-foreground">8. Governing law</h2>
           <p className="mt-2">
-            <span className="font-mono text-danger">
-              [GOVERNING LAW / JURISDICTION — REQUIRED, e.g. &ldquo;the laws of the Republic of South Africa&rdquo;]
-            </span>
+            These terms are governed by the laws of the Republic of South Africa, without regard to its conflict-of-
+            laws principles.
           </p>
         </section>
 
@@ -132,7 +131,11 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">10. Contact</h2>
           <p className="mt-2">
-            Questions about these terms: <span className="font-mono text-danger">[CONTACT EMAIL — REQUIRED]</span>.
+            Questions about these terms:{" "}
+            <a href="mailto:jacobesselmkhwanazi@gmail.com" className="text-accent hover:underline">
+              jacobesselmkhwanazi@gmail.com
+            </a>
+            .
           </p>
         </section>
       </div>
