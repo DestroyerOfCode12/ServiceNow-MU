@@ -29,10 +29,12 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-semibold text-foreground">1. Who operates this site</h2>
           <p className="mt-2">
-            CSA Prep Platform is operated by{" "}
-            <span className="font-mono text-danger">[BUSINESS/OPERATOR LEGAL NAME — REQUIRED]</span>. For any
+            CSA Prep Platform is operated by Jacob Essel Mkhwanazi, an individual (not a registered company). For any
             privacy question, correction, deletion, or access request, contact{" "}
-            <span className="font-mono text-danger">[PRIVACY CONTACT EMAIL — REQUIRED]</span>.
+            <a href="mailto:jacobesselmkhwanazi@gmail.com" className="text-accent hover:underline">
+              jacobesselmkhwanazi@gmail.com
+            </a>
+            .
           </p>
           <p className="mt-2 text-foreground-muted">
             This site is not affiliated with, endorsed by, or sponsored by ServiceNow, Inc.
@@ -161,9 +163,11 @@ export default function PrivacyPage() {
           </p>
           <p className="mt-2">
             To exercise any of these rights, email{" "}
-            <span className="font-mono text-danger">[PRIVACY CONTACT EMAIL — REQUIRED]</span>. Account deletion is
-            currently handled manually on request rather than through a self-service control in the product —
-            we aim to action requests within a reasonable time.
+            <a href="mailto:jacobesselmkhwanazi@gmail.com" className="text-accent hover:underline">
+              jacobesselmkhwanazi@gmail.com
+            </a>
+            . Account deletion is currently handled manually on request rather than through a self-service control
+            in the product — we aim to action requests within a reasonable time.
           </p>
         </section>
 
