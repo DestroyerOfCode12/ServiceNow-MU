@@ -6,8 +6,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  // Neon's pooled connection (the "-pooler" host, PgBouncer in transaction
+  // mode) can't reliably hold the session-level advisory lock Prisma takes
+  // out during `migrate deploy` — it timed out with P1002 on a build that
+  // ran the exact same command that had succeeded moments earlier, which is
+  // the signature of a pooled connection rather than a real migration
+  // problem (see https://pris.ly/d/migrate-advisory-locking). directUrl
+  // routes migrations (and only migrations — normal query traffic still
+  // uses the pooled DATABASE_URL above) through Neon's direct, unpooled
+  // endpoint instead.
+  directUrl = env("DIRECT_URL")
 }
 
 // ---------------------------------------------------------------------------
