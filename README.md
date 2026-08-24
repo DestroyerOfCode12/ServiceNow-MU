@@ -18,13 +18,14 @@ documentation rather than trusting the source study guide blindly.
 
 ## Deployments
 
-Deployed on two platforms in parallel, each with its own database:
+**Vercel** (canonical) — backed by a Neon Postgres database, with Prisma migrations run via
+`vercel.json`'s `buildCommand` (`prisma migrate deploy && next build`) ahead of every build.
+Migrations use Neon's direct/unpooled connection (`DIRECT_URL`) rather than the pooled
+`DATABASE_URL` — Prisma's `migrate deploy` takes a session-level advisory lock that a
+PgBouncer-pooled connection can't reliably hold.
 
-- **Netlify** (original) — Next.js via `@netlify/plugin-nextjs`, Prisma migrations run from a
-  custom build plugin (`netlify/plugins/prisma-migrate`).
-- **Vercel** — Prisma migrations run via `vercel.json`'s `buildCommand`
-  (`prisma migrate deploy && next build`) ahead of every build, backed by a Neon Postgres
-  database. Both platforms track this same branch and deploy independently on every push.
+An earlier Netlify deployment (its own database, a custom build plugin for migrations instead
+of `vercel.json`) is no longer maintained.
 
 ## Getting started
 
@@ -77,7 +78,7 @@ http://localhost:3000/api/auth/callback/microsoft-entra-id
   new client secret (copy its **value**, not its ID — it's only shown once).
 
 **2. Set the matching env vars** (`.env` locally; your host's environment
-variable settings in production — e.g. Netlify's site settings):
+variable settings in production — e.g. Vercel's Environment Variables page):
 
 ```bash
 AUTH_GITHUB_ID="..."
