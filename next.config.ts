@@ -26,14 +26,16 @@ const CSP = [
 
 const SECURITY_HEADERS = [
   { key: "Content-Security-Policy", value: CSP },
-  // Netlify/Next already add Strict-Transport-Security and
-  // X-Content-Type-Options; the ones below aren't set anywhere yet.
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
   },
+  // Set explicitly rather than relied on as a host default — confirmed
+  // Netlify adds this automatically but Vercel doesn't, so the app now sets
+  // it itself instead of depending on which platform happens to serve it.
+  { key: "X-Content-Type-Options", value: "nosniff" },
 ];
 
 const nextConfig: NextConfig = {
