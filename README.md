@@ -16,6 +16,16 @@ documentation rather than trusting the source study guide blindly.
 - Auth.js (NextAuth v5), credentials + bcrypt, plus optional GitHub/Google/Microsoft OAuth
 - Zod validation, Recharts, Vitest
 
+## Deployments
+
+Deployed on two platforms in parallel, each with its own database:
+
+- **Netlify** (original) — Next.js via `@netlify/plugin-nextjs`, Prisma migrations run from a
+  custom build plugin (`netlify/plugins/prisma-migrate`).
+- **Vercel** — Prisma migrations run via `vercel.json`'s `buildCommand`
+  (`prisma migrate deploy && next build`) ahead of every build, backed by a Neon Postgres
+  database. Both platforms track this same branch and deploy independently on every push.
+
 ## Getting started
 
 ```bash
