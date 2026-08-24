@@ -38,6 +38,18 @@ const SECURITY_HEADERS = [
   { key: "X-Content-Type-Options", value: "nosniff" },
 ];
 
+// The old Netlify domain (no longer the maintained deployment — see README's
+// Deployments section) still gets traffic from bookmarks, old links, and
+// search engines. Rather than a separate netlify.toml redirect rule (which
+// needs its own successful Netlify deploy to ever take effect, and Netlify
+// deploys are currently blocked by an account-level credit limit unrelated
+// to this app), this lives in the app itself: a host-matched redirect that
+// only ever fires when a request's Host header is the Netlify domain — a
+// no-op everywhere else, including on Vercel. It goes live automatically
+// the next time Netlify does manage to deploy, with no separate config.
+const OLD_NETLIFY_HOST = "servicenow-csa-prep.netlify.app";
+const CANONICAL_ORIGIN = "https://servicenow-csa-prep-v2.vercel.app";
+
 const nextConfig: NextConfig = {
   agentRules: false,
   // Stops the app from advertising "X-Powered-By: Next.js" on every
@@ -46,6 +58,20 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: OLD_NETLIFY_HOST }],
+        destination: `${CANONICAL_ORIGIN}/:path*`,
+        // 308 (Next.js's `permanent: true`) rather than a temporary 307 —
+        // this is a real domain migration, not a maintenance detour, so
+        // search engines should transfer ranking signal to the new domain
+        // instead of continuing to crawl/index the old one.
+        permanent: true,
+      },
+    ];
   },
 };
 
