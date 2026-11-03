@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { SITE_URL } from "@/lib/site";
 import { getCurrentUser } from "@/lib/current-user";
 import { DocumentationValidator } from "@/lib/validation/documentation-validator";
 import { SubTabs } from "@/components/nav/sub-tabs";
@@ -64,8 +65,23 @@ export default async function TopicPage({ params }: { params: Promise<{ slug: st
   const stale = DocumentationValidator.isStale(topic.lastValidatedAt);
   const primarySource = topic.sources[0]?.source;
 
+  // Home > CSA Domains > {topic}. The domain itself has no dedicated URL
+  // (it's a section within /study, not a separate page), so it's left out
+  // rather than pointed at a fragment that may not resolve for a crawler.
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "CSA Domains", item: `${SITE_URL}/study` },
+      { "@type": "ListItem", position: 3, name: topic.name, item: `${SITE_URL}/study/topics/${slug}` },
+    ],
+  };
+
   return (
     <div>
+      {/* Static per-request JSON built only from this topic's own name/slug — never interpolates raw user input. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <SubTabs tabs={STUDY_TABS} />
       <div className="container-page max-w-4xl py-10">
         <p className="text-sm text-foreground-muted">
