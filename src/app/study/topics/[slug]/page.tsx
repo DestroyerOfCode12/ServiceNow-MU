@@ -1,3 +1,5 @@
+import { cache } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
@@ -24,7 +26,9 @@ const SECTIONS: { key: keyof NonNullable<Awaited<ReturnType<typeof getTopic>>>; 
   { key: "exampleScenario", title: "Example Scenario" },
 ];
 
-async function getTopic(slug: string) {
+// Wrapped in React's cache() so generateMetadata and the page component
+// share one query per request instead of fetching the topic twice.
+const getTopic = cache(async (slug: string) => {
   return prisma.topic.findUnique({
     where: { slug },
     include: {
@@ -35,6 +39,17 @@ async function getTopic(slug: string) {
       _count: { select: { questions: true, flashcards: true } },
     },
   });
+});
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const topic = await getTopic(slug);
+  if (!topic) return {};
+  return {
+    title: topic.name,
+    description: topic.overview ?? undefined,
+    alternates: { canonical: `/study/topics/${slug}` },
+  };
 }
 
 export default async function TopicPage({ params }: { params: Promise<{ slug: string }> }) {

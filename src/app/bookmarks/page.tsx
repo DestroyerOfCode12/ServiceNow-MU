@@ -6,7 +6,9 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardBody } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-export const metadata: Metadata = { title: "My Study List · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "My Study List" };
 
 export default async function BookmarksPage() {
   const user = await getCurrentUser();

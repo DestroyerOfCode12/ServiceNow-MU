@@ -8,7 +8,9 @@ import { ADMIN_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
 
-export const metadata: Metadata = { title: "Admin · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Admin" };
 
 export default async function AdminOverviewPage() {
   const user = await getCurrentUser();

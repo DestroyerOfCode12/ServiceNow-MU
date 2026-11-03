@@ -4,7 +4,9 @@ import { getCurrentUser } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
 import { NotesList, type NoteRow } from "./notes-list";
 
-export const metadata: Metadata = { title: "Notes · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Notes" };
 
 export default async function NotesPage() {
   const user = await getCurrentUser();

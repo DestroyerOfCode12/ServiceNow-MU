@@ -8,7 +8,9 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { DomainPerformanceChart } from "@/components/charts/domain-performance-chart";
 import { ProgressBar } from "@/components/ui/progress-bar";
 
-export const metadata: Metadata = { title: "Progress · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Progress" };
 
 export default async function ProgressPage() {
   const user = await getCurrentUser();

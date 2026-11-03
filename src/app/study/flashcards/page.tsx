@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { shuffle } from "@/lib/shuffle";
 import { SubTabs } from "@/components/nav/sub-tabs";
 import { STUDY_TABS } from "@/components/nav/nav-links";
 import { FlashcardDeck } from "./flashcard-deck";
+
+export const metadata: Metadata = { title: "Flashcards", alternates: { canonical: "/study/flashcards" } };
 
 // Content is admin-editable and DB-backed — never statically frozen at build time.
 export const dynamic = "force-dynamic";

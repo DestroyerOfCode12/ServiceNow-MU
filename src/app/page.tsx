@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { LinkButton } from "@/components/ui/button";
 import { Card, CardBody } from "@/components/ui/card";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 const FEATURES = [
   "Full 60-question simulations",
