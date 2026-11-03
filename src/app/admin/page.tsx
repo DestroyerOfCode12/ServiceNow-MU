@@ -7,6 +7,7 @@ import { SubTabs } from "@/components/nav/sub-tabs";
 import { ADMIN_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
+import { IndexNowSubmitButton } from "./indexnow-submit-button";
 
 // Root layout's title template already appends "· CSA Prep Platform" —
 // repeating it here would double it up in the rendered <title>.
@@ -47,6 +48,19 @@ export default async function AdminOverviewPage() {
           <StatCard label="Rejected" value={statusMap.get("REJECTED") ?? 0} variant="danger" />
           <StatCard label="Draft" value={statusMap.get("DRAFT") ?? 0} variant="neutral" />
         </div>
+
+        <Card className="mt-6">
+          <CardBody className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="font-semibold text-foreground">Search Engine Indexing</h2>
+              <p className="mt-1 text-sm text-foreground-muted">
+                Push every public URL to Bing, Yandex, and other IndexNow-participating engines right away, instead
+                of waiting for their next crawl. Doesn&apos;t include Google, which doesn&apos;t support IndexNow.
+              </p>
+            </div>
+            <IndexNowSubmitButton />
+          </CardBody>
+        </Card>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <Card>

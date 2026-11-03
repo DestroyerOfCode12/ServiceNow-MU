@@ -5,6 +5,7 @@ import { SubTabs } from "@/components/nav/sub-tabs";
 import { STUDY_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   // Root layout's title template already appends "· CSA Prep Platform" —
@@ -15,6 +16,21 @@ export const metadata: Metadata = {
 
 // Content is admin-editable and DB-backed — never statically frozen at build time.
 export const dynamic = "force-dynamic";
+
+// Describes this page only as what it actually is: a free, self-paced
+// browse-and-study hub — no fabricated rating, instance schedule, or
+// accreditation claim.
+const COURSE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "ServiceNow CSA Exam Preparation",
+  description:
+    "Browse the ServiceNow CSA blueprint domain by domain, with topic pages validated against official ServiceNow documentation where a source has been confirmed.",
+  url: `${SITE_URL}/study`,
+  provider: { "@id": `${SITE_URL}/#organization` },
+  isAccessibleForFree: true,
+  inLanguage: "en",
+};
 
 export default async function StudyPage() {
   const domains = await prisma.examDomain.findMany({
@@ -30,6 +46,8 @@ export default async function StudyPage() {
 
   return (
     <div>
+      {/* Static, hardcoded JSON — never interpolates user input. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(COURSE_JSON_LD) }} />
       <SubTabs tabs={STUDY_TABS} />
       <div className="container-page py-10">
         <h1 className="text-2xl font-bold text-foreground">CSA Domains</h1>
