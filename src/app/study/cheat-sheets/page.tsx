@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { SubTabs } from "@/components/nav/sub-tabs";
 import { STUDY_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
 import { MarkdownLite } from "@/components/markdown-lite";
+
+export const metadata: Metadata = { title: "Cheat Sheets", alternates: { canonical: "/study/cheat-sheets" } };
 
 /**
  * Cheat sheets are generated at request time from each topic's already-

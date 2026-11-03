@@ -9,7 +9,9 @@ import { Card, CardBody } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/button";
 import { ProgressBar } from "@/components/ui/progress-bar";
 
-export const metadata: Metadata = { title: "Dashboard · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SearchClient } from "./search-client";
 
-export const metadata: Metadata = { title: "Search · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Search" };
 
 export default function SearchPage() {
   return (

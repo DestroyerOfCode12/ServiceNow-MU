@@ -6,7 +6,9 @@ import { PRACTICE_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/button";
 
-export const metadata: Metadata = { title: "Practice · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Practice" };
 
 const MODES = [
   { href: "/practice/quick", title: "Quick Practice", body: "10 mixed questions — a fast check-in when you have a few minutes." },

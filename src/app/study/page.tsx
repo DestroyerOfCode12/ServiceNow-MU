@@ -6,7 +6,12 @@ import { STUDY_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { ValidationBadge } from "@/components/validation-badge";
 
-export const metadata: Metadata = { title: "Study · CSA Prep Platform" };
+export const metadata: Metadata = {
+  // Root layout's title template already appends "· CSA Prep Platform" —
+  // repeating it here would double it up in the rendered <title>.
+  title: "Study",
+  alternates: { canonical: "/study" },
+};
 
 // Content is admin-editable and DB-backed — never statically frozen at build time.
 export const dynamic = "force-dynamic";

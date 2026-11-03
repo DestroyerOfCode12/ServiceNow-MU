@@ -7,7 +7,9 @@ import { EXAM_TABS } from "@/components/nav/nav-links";
 import { Card, CardBody } from "@/components/ui/card";
 import { StartAttemptButton } from "@/components/exam/start-attempt-button";
 
-export const metadata: Metadata = { title: "Exams · CSA Prep Platform" };
+// Root layout's title template already appends "· CSA Prep Platform" —
+// repeating it here would double it up in the rendered <title>.
+export const metadata: Metadata = { title: "Exams" };
 
 export default async function FullExamPage() {
   const user = await getCurrentUser();
